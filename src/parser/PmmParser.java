@@ -1,4 +1,4 @@
-// Generated from C:/Users/UO287747/Desktop/DLP-Project/src/parser/Pmm.g4 by ANTLR 4.13.1
+// Generated from C:/Users/Ángel/Desktop/EII_3_DLP/src/parser/Pmm.g4 by ANTLR 4.13.1
 package parser;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -17,7 +17,7 @@ public class PmmParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		TRASH=1, COMMENT=2, IDENT=3, INT_CONSTANT=4, REAL_CONSTANT=5;
+		TRASH=1, COMMENT=2, ID=3, INT_CONSTANT=4, REAL_CONSTANT=5, CHAR_CONSTANT=6;
 	public static final int
 		RULE_program = 0;
 	private static String[] makeRuleNames() {
@@ -34,7 +34,7 @@ public class PmmParser extends Parser {
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, "TRASH", "COMMENT", "IDENT", "INT_CONSTANT", "REAL_CONSTANT"
+			null, "TRASH", "COMMENT", "ID", "INT_CONSTANT", "REAL_CONSTANT", "CHAR_CONSTANT"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -121,7 +121,7 @@ public class PmmParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\u0005\u0005\u0002\u0000\u0007\u0000\u0001\u0000\u0001\u0000"+
+		"\u0004\u0001\u0006\u0005\u0002\u0000\u0007\u0000\u0001\u0000\u0001\u0000"+
 		"\u0001\u0000\u0000\u0000\u0001\u0000\u0000\u0000\u0003\u0000\u0002\u0001"+
 		"\u0000\u0000\u0000\u0002\u0003\u0001\u0000\u0000\u0000\u0003\u0001\u0001"+
 		"\u0000\u0000\u0000\u0000";

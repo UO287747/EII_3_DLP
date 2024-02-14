@@ -1,5 +1,7 @@
 package parser;
 
+import java.io.CharConversionException;
+
 public class LexerHelper {
 	
 	public static int lexemeToInt(String str) {
@@ -24,15 +26,21 @@ public class LexerHelper {
 
 	public static char lexemeToChar(String str) {
 		try {
-			if (str.startsWith("\'")){
+			if (str.charAt(1) == '\\'){
+				if (str.charAt(2) == 'n') {
+					return '\n';
+				} else if (str.charAt(2) == 't') {
+					return '\t';
+				} else {
+					return (char) Integer.parseInt(str.substring(2, str.length() - 1));
+				}
+			} else {
+				return str.charAt(1);
 			}
 		}
-		catch(NumberFormatException e) {
+		catch(Exception e) {
 			System.out.println(e);
 		}
-		return '0';
+		return str.charAt(1);
 	}
-
-	// TODO: Implement the lexemeToChar method
-	
 }
