@@ -1,44 +1,59 @@
 grammar Pmm;	
 
-program: expression EOF
+program: definition* EOF
        ;
 
 expression: INT_CONSTANT
             | REAL_CONSTANT
             | CHAR_CONSTANT
             | ID
+            | function
             | '(' expression ')'
-            | '[' expression ']'
+            | expression '[' expression ']'
             | expression'.'ID
-            | '('tipo')' expression
+            | '('type')' expression
             | '-' expression
             | '!' expression
-            | expression ('*'|'/'|'%')
+            | expression ('*'|'/'|'%') expression
             | expression ('+'|'-') expression
-            | expression ('>'|'>='|'<'|'<='|'==') expression
+            | expression ('>'|'>='|'<'|'<='|'=='|'!=') expression
             | expression ('&&'|'||') expression;
 
 expressions: expression
              | expression','expressions;
 
-statement: 'print'  expressions
-            | 'input' expressions
-            | expression '=' expression
-            | 'if' expression ':' ('{' statements '}'|statement) ('else' ':' ('{' statements '}'|statement))?
-            | 'while' expression ':' ('{' statements '}'|statement)
-            | 'return' expression
-            | ;
+statement: 'print' expressions ';'
+            | 'input' expressions ';'
+            | expression '=' expression ';'
+            | 'if' expression ':' loop_body ('else' ':' loop_body)?
+            | 'while' expression ':' loop_body
+            | 'return' expression ';'
+            | function ';';
 
-statements: statement ';'
-            | statement ';' statements;
+loop_body: '{' statement* '}'
+            | statement;
 
+function: ID '(' expressions? ')' ;
 
-var_definition: variables ':' tipo ';';
+definition: func_definition
+            | var_definition ';';
+
+func_definition: 'def' ID '(' parameters? ')' ':' type? '{' (var_definition';')* statement* '}';
+
+parameters: var_definition (','var_definition)*;
+
+var_definition: variables ':' type;
 
 variables : ID
             | ID ',' variables;
 
-tipo: 'int' | 'double' | 'char';
+type: 'int'
+      | 'double'
+      | 'char'
+      | '[' INT_CONSTANT ']' type
+      | 'struct' '{' struct_field* '}';
+
+struct_field: ID ':' type ';';
 
 
 
