@@ -1,8 +1,44 @@
 grammar Pmm;	
 
-program: 
+program: expression EOF
        ;
 
+expression: INT_CONSTANT
+            | REAL_CONSTANT
+            | CHAR_CONSTANT
+            | ID
+            | '(' expression ')'
+            | '[' expression ']'
+            | expression'.'ID
+            | '('tipo')' expression
+            | '-' expression
+            | '!' expression
+            | expression ('*'|'/'|'%')
+            | expression ('+'|'-') expression
+            | expression ('>'|'>='|'<'|'<='|'==') expression
+            | expression ('&&'|'||') expression;
+
+expressions: expression
+             | expression','expressions;
+
+statement: 'print'  expressions
+            | 'input' expressions
+            | expression '=' expression
+            | 'if' expression ':' ('{' statements '}'|statement) ('else' ':' ('{' statements '}'|statement))?
+            | 'while' expression ':' ('{' statements '}'|statement)
+            | 'return' expression
+            | ;
+
+statements: statement ';'
+            | statement ';' statements;
+
+
+var_definition: variables ':' tipo ';';
+
+variables : ID
+            | ID ',' variables;
+
+tipo: 'int' | 'double' | 'char';
 
 
 
