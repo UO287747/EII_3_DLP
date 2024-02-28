@@ -3,9 +3,9 @@ package ast.types;
 import ast.AbstractASTNode;
 import ast.Type;
 
-public class Integer extends AbstractASTNode implements Type {
+public class IntType extends AbstractASTNode implements Type {
 
-    public Integer(int line, int column) {
+    public IntType(int line, int column) {
         super(line, column);
     }
 

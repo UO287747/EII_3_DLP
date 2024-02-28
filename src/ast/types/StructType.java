@@ -6,11 +6,11 @@ import ast.Type;
 
 import java.util.List;
 
-public class Struct extends AbstractASTNode implements Type {
+public class StructType extends AbstractASTNode implements Type {
 
     private List<RecordField> recordFields;
 
-    public Struct(int line, int column, List<RecordField> recordFields) {
+    public StructType(int line, int column, List<RecordField> recordFields) {
         super(line, column);
         this.recordFields = recordFields;
     }

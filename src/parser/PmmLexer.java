@@ -1,5 +1,13 @@
-// Generated from C:/Users/angel/Desktop/EII_3_DLP/src/parser/Pmm.g4 by ANTLR 4.13.1
+// Generated from C:/Users/UO287747/Desktop/EII_3_DLP/src/parser/Pmm.g4 by ANTLR 4.13.1
 package parser;
+
+
+    import ast.*;
+    import ast.definitions.*;
+    import ast.expressions.*;
+    import ast.statements.*;
+    import ast.types.*;
+
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;

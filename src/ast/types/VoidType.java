@@ -3,15 +3,15 @@ package ast.types;
 import ast.AbstractASTNode;
 import ast.Type;
 
-public class Double extends AbstractASTNode implements Type {
+public class VoidType extends AbstractASTNode implements Type {
 
-    public Double(int line, int column) {
+    public VoidType(int line, int column) {
         super(line, column);
     }
 
     @Override
     public String toString() {
-        return "Double{" +
+        return "Void{" +
                 "line=" + line +
                 ", column=" + column +
                 '}';
