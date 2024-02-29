@@ -5,7 +5,6 @@ import ast.Definition;
 public class Variable extends AbstractExpresion {
 
     private String name;
-    private Definition definition;
 
     public Variable(int line, int column, String name) {
         super(line, column);
@@ -14,14 +13,6 @@ public class Variable extends AbstractExpresion {
 
     public String getName() {
         return name;
-    }
-
-    public Definition getDefinition() {
-        return definition;
-    }
-
-    public void setDefinition(Definition definition) {
-        this.definition = definition;
     }
 
     @Override

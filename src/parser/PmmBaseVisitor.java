@@ -1,6 +1,5 @@
-// Generated from C:/Users/UO287747/Desktop/EII_3_DLP/src/parser/Pmm.g4 by ANTLR 4.13.1
+// Generated from C:/Users/angel/Desktop/EII_3_DLP/src/parser/Pmm.g4 by ANTLR 4.13.1
 package parser;
-
 
     import ast.*;
     import ast.definitions.*;
@@ -27,6 +26,13 @@ public class PmmBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Pm
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitProgram(PmmParser.ProgramContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitMain(PmmParser.MainContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -61,14 +67,14 @@ public class PmmBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Pm
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitFunction(PmmParser.FunctionContext ctx) { return visitChildren(ctx); }
+	@Override public T visitFunctionStatement(PmmParser.FunctionStatementContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitDefinition(PmmParser.DefinitionContext ctx) { return visitChildren(ctx); }
+	@Override public T visitFunctionExpression(PmmParser.FunctionExpressionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

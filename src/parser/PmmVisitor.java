@@ -1,6 +1,5 @@
-// Generated from C:/Users/UO287747/Desktop/EII_3_DLP/src/parser/Pmm.g4 by ANTLR 4.13.1
+// Generated from C:/Users/angel/Desktop/EII_3_DLP/src/parser/Pmm.g4 by ANTLR 4.13.1
 package parser;
-
 
     import ast.*;
     import ast.definitions.*;
@@ -24,6 +23,12 @@ public interface PmmVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitProgram(PmmParser.ProgramContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PmmParser#main}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMain(PmmParser.MainContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link PmmParser#expression}.
 	 * @param ctx the parse tree
@@ -49,17 +54,17 @@ public interface PmmVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLoop_body(PmmParser.Loop_bodyContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link PmmParser#function}.
+	 * Visit a parse tree produced by {@link PmmParser#functionStatement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitFunction(PmmParser.FunctionContext ctx);
+	T visitFunctionStatement(PmmParser.FunctionStatementContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link PmmParser#definition}.
+	 * Visit a parse tree produced by {@link PmmParser#functionExpression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitDefinition(PmmParser.DefinitionContext ctx);
+	T visitFunctionExpression(PmmParser.FunctionExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link PmmParser#func_definition}.
 	 * @param ctx the parse tree
