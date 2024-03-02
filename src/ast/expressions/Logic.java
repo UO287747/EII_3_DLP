@@ -4,20 +4,20 @@ import ast.Expression;
 
 public class Logic extends AbstractExpresion {
 
-    private String operator;
+    private String OP;
 
     private Expression left;
     private Expression right;
 
-    public Logic(int line, int column, Expression left, Expression right, String operator) {
+    public Logic(int line, int column, Expression left, Expression right, String OP) {
         super(line, column);
-        this.operator = operator;
+        this.OP = OP;
         this.left = left;
         this.right = right;
     }
 
-    public String getOperator() {
-        return operator;
+    public String getOP() {
+        return OP;
     }
 
     public Expression getLeft() {
@@ -31,7 +31,7 @@ public class Logic extends AbstractExpresion {
     @Override
     public String toString() {
         return "Logic{" +
-                "operator='" + operator + '\'' +
+                "OP='" + OP + '\'' +
                 ", left=" + left +
                 ", right=" + right +
                 ", line=" + line +

@@ -7,13 +7,13 @@ public class Comparison extends AbstractExpresion {
     private Expression left;
     private Expression right;
 
-    private String operator;
+    private String OP;
 
-    public Comparison(int line, int column, Expression left, Expression right, String operator) {
+    public Comparison(int line, int column, Expression left, Expression right, String OP) {
         super(line, column);
         this.left = left;
         this.right = right;
-        this.operator = operator;
+        this.OP = OP;
     }
 
     public Expression getLeft() {
@@ -24,14 +24,14 @@ public class Comparison extends AbstractExpresion {
         return right;
     }
 
-    public String getOperator() {
-        return operator;
+    public String getOP() {
+        return OP;
     }
 
     @Override
     public String toString() {
         return "Comparison{" +
-                "operator='" + operator + '\'' +
+                "OP='" + OP + '\'' +
                 ", left=" + left +
                 ", right=" + right +
                 ", line=" + line +

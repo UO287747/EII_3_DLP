@@ -528,7 +528,7 @@ public class PmmParser extends Parser {
 						}
 						setState(116);
 						((ExpressionContext)_localctx).e2 = expression(3);
-						 new Arithmetic(((ExpressionContext)_localctx).OP.getLine(), ((ExpressionContext)_localctx).OP.getCharPositionInLine()+1, ((ExpressionContext)_localctx).e1.ast, ((ExpressionContext)_localctx).e2.ast, (((ExpressionContext)_localctx).OP!=null?((ExpressionContext)_localctx).OP.getText():null)); 
+						 new Comparison(((ExpressionContext)_localctx).OP.getLine(), ((ExpressionContext)_localctx).OP.getCharPositionInLine()+1, ((ExpressionContext)_localctx).e1.ast, ((ExpressionContext)_localctx).e2.ast, (((ExpressionContext)_localctx).OP!=null?((ExpressionContext)_localctx).OP.getText():null)); 
 						}
 						break;
 					case 4:
@@ -551,7 +551,7 @@ public class PmmParser extends Parser {
 						}
 						setState(121);
 						((ExpressionContext)_localctx).e2 = expression(2);
-						 new Arithmetic(((ExpressionContext)_localctx).OP.getLine(), ((ExpressionContext)_localctx).OP.getCharPositionInLine()+1, ((ExpressionContext)_localctx).e1.ast, ((ExpressionContext)_localctx).e2.ast, (((ExpressionContext)_localctx).OP!=null?((ExpressionContext)_localctx).OP.getText():null)); 
+						 new Logic(((ExpressionContext)_localctx).OP.getLine(), ((ExpressionContext)_localctx).OP.getCharPositionInLine()+1, ((ExpressionContext)_localctx).e1.ast, ((ExpressionContext)_localctx).e2.ast, (((ExpressionContext)_localctx).OP!=null?((ExpressionContext)_localctx).OP.getText():null)); 
 						}
 						break;
 					case 5:
@@ -1056,7 +1056,7 @@ public class PmmParser extends Parser {
 	@SuppressWarnings("CheckReturnValue")
 	public static class Func_definitionContext extends ParserRuleContext {
 		public Definition ast;
-		public List<Definition> params = new ArrayList<Definition>();
+		public List<VarDefinition> params = new ArrayList<VarDefinition>();
 		public Type return_ = new VoidType(0,0);
 		public List<VarDefinition> varDefinitions = new ArrayList<VarDefinition>();
 		public List<Statement> statements = new ArrayList<Statement>();
@@ -1174,7 +1174,7 @@ public class PmmParser extends Parser {
 			setState(264);
 			match(T__7);
 
-			                FunctionType ft = new FunctionType(((Func_definitionContext)_localctx).ID.getLine(), ((Func_definitionContext)_localctx).ID.getCharPositionInLine()+1, _localctx.return_, _localctx.varDefinitions);
+			                FunctionType ft = new FunctionType(((Func_definitionContext)_localctx).ID.getLine(), ((Func_definitionContext)_localctx).ID.getCharPositionInLine()+1, _localctx.return_, _localctx.params);
 			                ((Func_definitionContext)_localctx).ast =  new FuncDefinition(((Func_definitionContext)_localctx).ID.getLine(), ((Func_definitionContext)_localctx).ID.getCharPositionInLine()+1, ft, (((Func_definitionContext)_localctx).ID!=null?((Func_definitionContext)_localctx).ID.getText():null), _localctx.varDefinitions, _localctx.statements);
 			            
 			}
@@ -1192,7 +1192,7 @@ public class PmmParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class ParametersContext extends ParserRuleContext {
-		public List<Definition> ast = new ArrayList<Definition>();
+		public List<VarDefinition> ast = new ArrayList<VarDefinition>();
 		public Var_definitionContext vd1;
 		public Var_definitionContext vd2;
 		public List<Var_definitionContext> var_definition() {

@@ -9,20 +9,20 @@ import java.util.List;
 public class FunctionType extends AbstractASTNode implements Type {
 
     private Type returnType;
-    private List<VarDefinition> varDefinitions;
+    private List<VarDefinition> params;
 
-    public FunctionType(int line, int column, Type returnType, List<VarDefinition> varDefinitions) {
+    public FunctionType(int line, int column, Type returnType, List<VarDefinition> params) {
         super(line, column);
         this.returnType = returnType;
-        this.varDefinitions = varDefinitions;
+        this.params = params;
     }
 
     public Type getReturnType() {
         return returnType;
     }
 
-    public List<VarDefinition> getVarDefinitions() {
-        return varDefinitions;
+    public List<VarDefinition> getParams() {
+        return params;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class FunctionType extends AbstractASTNode implements Type {
                 "line=" + line +
                 ", column=" + column +
                 ", returnType=" + returnType +
-                ", varDefinitions=" + varDefinitions +
+                ", params=" + params +
                 '}';
     }
 }

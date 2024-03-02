@@ -7,13 +7,13 @@ public class Arithmetic extends AbstractExpresion {
     private Expression left;
     private Expression right;
 
-    private String operator;
+    private String OP;
 
-    public Arithmetic(int line, int column, Expression left, Expression right, String operator) {
+    public Arithmetic(int line, int column, Expression left, Expression right, String OP) {
         super(line, column);
         this.left = left;
         this.right = right;
-        this.operator = operator;
+        this.OP = OP;
     }
 
     public Expression getLeft() {
@@ -24,14 +24,14 @@ public class Arithmetic extends AbstractExpresion {
         return right;
     }
 
-    public String getOperator() {
-        return operator;
+    public String getOP() {
+        return OP;
     }
 
     @Override
     public String toString() {
         return "Arithmetic{" +
-                "operator='" + operator + '\'' +
+                "OP='" + OP + '\'' +
                 ", left=" + left +
                 ", right=" + right +
                 ", line=" + line +

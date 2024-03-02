@@ -41,8 +41,8 @@ expression returns [Expression ast]:
             | '!' e1=expression { $ast = new UnaryNot($e1.ast.getLine(), $e1.ast.getColumn(), $e1.ast); }
             | e1=expression OP=('*'|'/'|'%') e2=expression { new Arithmetic($OP.getLine(), $OP.getCharPositionInLine()+1, $e1.ast, $e2.ast, $OP.text); }
             | e1=expression OP=('+'|'-') e2=expression { new Arithmetic($OP.getLine(), $OP.getCharPositionInLine()+1, $e1.ast, $e2.ast, $OP.text); }
-            | e1=expression OP=('>'|'>='|'<'|'<='|'=='|'!=') e2=expression { new Arithmetic($OP.getLine(), $OP.getCharPositionInLine()+1, $e1.ast, $e2.ast, $OP.text); }
-            | e1=expression OP=('&&'|'||') e2=expression { new Arithmetic($OP.getLine(), $OP.getCharPositionInLine()+1, $e1.ast, $e2.ast, $OP.text); };
+            | e1=expression OP=('>'|'>='|'<'|'<='|'=='|'!=') e2=expression { new Comparison($OP.getLine(), $OP.getCharPositionInLine()+1, $e1.ast, $e2.ast, $OP.text); }
+            | e1=expression OP=('&&'|'||') e2=expression { new Logic($OP.getLine(), $OP.getCharPositionInLine()+1, $e1.ast, $e2.ast, $OP.text); };
 
 expressions returns [List<Expression> ast = new ArrayList<Expression>()]:
             expression { $ast.add($expression.ast); }
@@ -84,18 +84,18 @@ functionExpression returns [Expression ast] locals [ List<Expression> list = new
 
 func_definition returns [ Definition ast ]
                 locals [
-                List<Definition> params = new ArrayList<Definition>(),
+                List<VarDefinition> params = new ArrayList<VarDefinition>(),
                 Type return = new VoidType(0,0),
                 List<VarDefinition> varDefinitions = new ArrayList<VarDefinition>(),
                 List<Statement> statements = new ArrayList<Statement>()]:
             'def' ID '(' (parameters{ $params.addAll($parameters.ast); })? ')' ':' (type{ $return = $type.ast; })? '{'
             (var_definition';'{ $varDefinitions.addAll($var_definition.ast); })* (statement{ $statements.addAll($statement.ast); })* '}'
             {
-                FunctionType ft = new FunctionType($ID.getLine(), $ID.getCharPositionInLine()+1, $return, $varDefinitions);
+                FunctionType ft = new FunctionType($ID.getLine(), $ID.getCharPositionInLine()+1, $return, $params);
                 $ast = new FuncDefinition($ID.getLine(), $ID.getCharPositionInLine()+1, ft, $ID.text, $varDefinitions, $statements);
             };
 
-parameters returns [ List<Definition> ast = new ArrayList<Definition>() ]:
+parameters returns [ List<VarDefinition> ast = new ArrayList<VarDefinition>() ]:
             vd1=var_definition { $ast.addAll($vd1.ast); } (','vd2=var_definition { $ast.addAll($vd2.ast); } )*;
 
 var_definition returns [ List<VarDefinition> ast = new ArrayList<VarDefinition>() ]:
