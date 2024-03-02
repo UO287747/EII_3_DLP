@@ -1,15 +1,16 @@
 package ast.expressions;
 
 import ast.Expression;
+import ast.Statement;
 
 import java.util.List;
 
-public class FuncCall extends AbstractExpresion {
+public class FuncInvocation extends AbstractExpresion implements Statement {
 
     private List<Expression> expressions;
     private Variable variable;
 
-    public FuncCall(int line, int column, List<Expression> expressions, Variable variable) {
+    public FuncInvocation(int line, int column, List<Expression> expressions, Variable variable) {
         super(line, column);
         this.expressions = expressions;
         this.variable = variable;
