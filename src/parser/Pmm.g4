@@ -102,7 +102,10 @@ var_definition returns [ List<VarDefinition> ast = new ArrayList<VarDefinition>(
             variables ':' type {
 
                 for (Variable v: $variables.ast) {
-                    $ast.add( new VarDefinition(v.getLine(), v.getColumn(), $type.ast, v.getName()));
+
+                    VarDefinition vd = new VarDefinition(v.getLine(), v.getColumn(), $type.ast, v.getName());
+                    if (!$ast.contains(vd)) { $ast.add(vd); }
+                    else { new ErrorType(v.getLine(), v.getColumn(), "La variable " + v.getName() + " ya se ha declarado."); }
                 }
             };
 
@@ -123,7 +126,10 @@ struct_field returns [ List<RecordField> ast = new ArrayList<RecordField>() ]:
         (variables ':' type ';' {
 
             for (Variable v: $variables.ast) {
-                $ast.add( new RecordField(v.getLine(), v.getColumn(), v.getName(), $type.ast));
+
+                RecordField rf = new RecordField(v.getLine(), v.getColumn(), v.getName(), $type.ast);
+                if (!$ast.contains(rf)) { $ast.add(rf); }
+                else { new ErrorType(v.getLine(), v.getColumn(), "El campo " + v.getName() + " ya se ha declarado."); }
             }
         })+;
 

@@ -4,6 +4,8 @@ import ast.AbstractASTNode;
 import ast.Definition;
 import ast.Type;
 
+import java.util.Objects;
+
 public class VarDefinition extends AbstractASTNode implements Definition {
 
     private Type type;
@@ -23,6 +25,19 @@ public class VarDefinition extends AbstractASTNode implements Definition {
     @Override
     public String getName() {
         return null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        VarDefinition that = (VarDefinition) o;
+        return name.equals(that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 
     @Override

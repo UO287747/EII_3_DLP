@@ -1,4 +1,4 @@
-// Generated from C:/Users/UO287747/Desktop/EII_3_DLP/src/parser/Pmm.g4 by ANTLR 4.13.1
+// Generated from C:/Users/angel/Desktop/EII_3_DLP/src/parser/Pmm.g4 by ANTLR 4.13.1
 package parser;
 
     import ast.*;
@@ -1289,7 +1289,10 @@ public class PmmParser extends Parser {
 
 
 			                for (Variable v: ((Var_definitionContext)_localctx).variables.ast) {
-			                    _localctx.ast.add( new VarDefinition(v.getLine(), v.getColumn(), ((Var_definitionContext)_localctx).type.ast, v.getName()));
+
+			                    VarDefinition vd = new VarDefinition(v.getLine(), v.getColumn(), ((Var_definitionContext)_localctx).type.ast, v.getName());
+			                    if (!_localctx.ast.contains(vd)) { _localctx.ast.add(vd); }
+			                    else { new ErrorType(v.getLine(), v.getColumn(), "La variable " + v.getName() + " ya se ha declarado."); }
 			                }
 			            
 			}
@@ -1542,7 +1545,10 @@ public class PmmParser extends Parser {
 
 
 					            for (Variable v: ((Struct_fieldContext)_localctx).variables.ast) {
-					                _localctx.ast.add( new RecordField(v.getLine(), v.getColumn(), v.getName(), ((Struct_fieldContext)_localctx).type.ast));
+
+					                RecordField rf = new RecordField(v.getLine(), v.getColumn(), v.getName(), ((Struct_fieldContext)_localctx).type.ast);
+					                if (!_localctx.ast.contains(rf)) { _localctx.ast.add(rf); }
+					                else { new ErrorType(v.getLine(), v.getColumn(), "El campo " + v.getName() + " ya se ha declarado."); }
 					            }
 					        
 					}

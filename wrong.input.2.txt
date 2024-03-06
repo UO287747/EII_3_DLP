@@ -1,5 +1,5 @@
 tuple: struct { 
-	key:int;	
+	key:int;
 	value:int;	
 	key:double; # Error: duplicated field
 };

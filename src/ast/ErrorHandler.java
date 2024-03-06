@@ -6,17 +6,13 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class ErrorHandler extends AbstractASTNode {
+public class ErrorHandler {
 
     private static ErrorHandler instance;
-    private List<ErrorType> errors = new ArrayList<ErrorType>();
+    private List<ErrorType> errors;
 
     private ErrorHandler() {
-        super(0,0);
-    }
-
-    private ErrorHandler(int line, int column) {
-        super(line, column);
+        errors = new ArrayList<ErrorType>();
     }
 
     public static ErrorHandler getInstance() {
@@ -33,9 +29,12 @@ public final class ErrorHandler extends AbstractASTNode {
 
     public void showErrors(PrintStream err) {
 
+        for (ErrorType et: errors) {
+            err.println(et);
+        }
     }
 
     public void addError(ErrorType error) {
-        this.errors.add(error);
+        errors.add(error);
     }
 }
