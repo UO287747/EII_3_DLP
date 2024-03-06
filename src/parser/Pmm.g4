@@ -108,7 +108,7 @@ var_definition returns [ List<VarDefinition> ast = new ArrayList<VarDefinition>(
 
 variables returns [ List<Variable> ast = new ArrayList<Variable>() ] :
             ID { $ast.add( new Variable($ID.getLine(), $ID.getCharPositionInLine()+1, $ID.text) ); }
-            | ID ',' variables { $ast.addAll( $variables.ast ); };
+            (',' ID { $ast.add(new Variable($ID.getLine(), $ID.getCharPositionInLine()+1, $ID.text)); })*;
 
 type returns [Type ast]:
     'int' { $ast = new IntType(0,0); }

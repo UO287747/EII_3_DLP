@@ -1,4 +1,4 @@
-// Generated from C:/Users/angel/Desktop/EII_3_DLP/src/parser/Pmm.g4 by ANTLR 4.13.1
+// Generated from C:/Users/UO287747/Desktop/EII_3_DLP/src/parser/Pmm.g4 by ANTLR 4.13.1
 package parser;
 
     import ast.*;
@@ -1309,10 +1309,9 @@ public class PmmParser extends Parser {
 	public static class VariablesContext extends ParserRuleContext {
 		public List<Variable> ast = new ArrayList<Variable>();
 		public Token ID;
-		public VariablesContext variables;
-		public TerminalNode ID() { return getToken(PmmParser.ID, 0); }
-		public VariablesContext variables() {
-			return getRuleContext(VariablesContext.class,0);
+		public List<TerminalNode> ID() { return getTokens(PmmParser.ID); }
+		public TerminalNode ID(int i) {
+			return getToken(PmmParser.ID, i);
 		}
 		public VariablesContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -1328,30 +1327,30 @@ public class PmmParser extends Parser {
 	public final VariablesContext variables() throws RecognitionException {
 		VariablesContext _localctx = new VariablesContext(_ctx, getState());
 		enterRule(_localctx, 22, RULE_variables);
+		int _la;
 		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(283);
+			((VariablesContext)_localctx).ID = match(ID);
+			 _localctx.ast.add( new Variable(((VariablesContext)_localctx).ID.getLine(), ((VariablesContext)_localctx).ID.getCharPositionInLine()+1, (((VariablesContext)_localctx).ID!=null?((VariablesContext)_localctx).ID.getText():null)) ); 
 			setState(290);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,19,_ctx) ) {
-			case 1:
-				enterOuterAlt(_localctx, 1);
+			_la = _input.LA(1);
+			while (_la==T__25) {
 				{
-				setState(283);
-				((VariablesContext)_localctx).ID = match(ID);
-				 _localctx.ast.add( new Variable(((VariablesContext)_localctx).ID.getLine(), ((VariablesContext)_localctx).ID.getCharPositionInLine()+1, (((VariablesContext)_localctx).ID!=null?((VariablesContext)_localctx).ID.getText():null)) ); 
-				}
-				break;
-			case 2:
-				enterOuterAlt(_localctx, 2);
 				{
 				setState(285);
-				match(ID);
-				setState(286);
 				match(T__25);
-				setState(287);
-				((VariablesContext)_localctx).variables = variables();
-				 _localctx.ast.addAll( ((VariablesContext)_localctx).variables.ast ); 
+				setState(286);
+				((VariablesContext)_localctx).ID = match(ID);
+				 _localctx.ast.add(new Variable(((VariablesContext)_localctx).ID.getLine(), ((VariablesContext)_localctx).ID.getCharPositionInLine()+1, (((VariablesContext)_localctx).ID!=null?((VariablesContext)_localctx).ID.getText():null))); 
 				}
-				break;
+				}
+				setState(292);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			}
 			}
 		}
 		catch (RecognitionException re) {
@@ -1398,13 +1397,13 @@ public class PmmParser extends Parser {
 		enterRule(_localctx, 24, RULE_type);
 		int _la;
 		try {
-			setState(317);
+			setState(318);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__33:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(292);
+				setState(293);
 				match(T__33);
 				 ((TypeContext)_localctx).ast =  new IntType(0,0); 
 				}
@@ -1412,7 +1411,7 @@ public class PmmParser extends Parser {
 			case T__34:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(294);
+				setState(295);
 				match(T__34);
 				 ((TypeContext)_localctx).ast =  new DoubleType(0,0); 
 				}
@@ -1420,7 +1419,7 @@ public class PmmParser extends Parser {
 			case T__35:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(296);
+				setState(297);
 				match(T__35);
 				 ((TypeContext)_localctx).ast =  new CharType(0,0); 
 				}
@@ -1428,13 +1427,13 @@ public class PmmParser extends Parser {
 			case T__8:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(298);
-				match(T__8);
 				setState(299);
-				((TypeContext)_localctx).INT_CONSTANT = match(INT_CONSTANT);
+				match(T__8);
 				setState(300);
-				match(T__9);
+				((TypeContext)_localctx).INT_CONSTANT = match(INT_CONSTANT);
 				setState(301);
+				match(T__9);
+				setState(302);
 				((TypeContext)_localctx).type = type();
 				 ((TypeContext)_localctx).ast =  new ArrayType(((TypeContext)_localctx).INT_CONSTANT.getLine(), ((TypeContext)_localctx).INT_CONSTANT.getCharPositionInLine()+1,
 				                                    LexerHelper.lexemeToInt((((TypeContext)_localctx).INT_CONSTANT!=null?((TypeContext)_localctx).INT_CONSTANT.getText():null)), ((TypeContext)_localctx).type.ast ); 
@@ -1443,33 +1442,33 @@ public class PmmParser extends Parser {
 			case T__36:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(304);
-				((TypeContext)_localctx).e = match(T__36);
 				setState(305);
+				((TypeContext)_localctx).e = match(T__36);
+				setState(306);
 				match(T__6);
-				setState(311);
+				setState(312);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==ID) {
 					{
 					{
-					setState(306);
+					setState(307);
 					((TypeContext)_localctx).struct_field = struct_field();
 					 ((TypeContext)_localctx).ast =  new StructType(((TypeContext)_localctx).e.getLine(), ((TypeContext)_localctx).e.getCharPositionInLine()+1, ((TypeContext)_localctx).struct_field.ast); 
 					}
 					}
-					setState(313);
+					setState(314);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(314);
+				setState(315);
 				match(T__7);
 				}
 				break;
 			case T__37:
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(315);
+				setState(316);
 				match(T__37);
 				 ((TypeContext)_localctx).ast =  new VoidType(0,0); 
 				}
@@ -1524,7 +1523,7 @@ public class PmmParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(325); 
+			setState(326); 
 			_errHandler.sync(this);
 			_alt = 1;
 			do {
@@ -1532,13 +1531,13 @@ public class PmmParser extends Parser {
 				case 1:
 					{
 					{
-					setState(319);
-					((Struct_fieldContext)_localctx).variables = variables();
 					setState(320);
-					match(T__5);
+					((Struct_fieldContext)_localctx).variables = variables();
 					setState(321);
-					((Struct_fieldContext)_localctx).type = type();
+					match(T__5);
 					setState(322);
+					((Struct_fieldContext)_localctx).type = type();
+					setState(323);
 					match(T__0);
 
 
@@ -1552,7 +1551,7 @@ public class PmmParser extends Parser {
 				default:
 					throw new NoViableAltException(this);
 				}
-				setState(327); 
+				setState(328); 
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,22,_ctx);
 			} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
@@ -1595,7 +1594,7 @@ public class PmmParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001,\u014a\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
+		"\u0004\u0001,\u014b\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
 		"\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004\u0002"+
 		"\u0005\u0007\u0005\u0002\u0006\u0007\u0006\u0002\u0007\u0007\u0007\u0002"+
 		"\b\u0007\b\u0002\t\u0007\t\u0002\n\u0007\n\u0002\u000b\u0007\u000b\u0002"+
@@ -1639,21 +1638,21 @@ public class PmmParser extends Parser {
 		"\b\n\b\f\b\u0107\t\b\u0001\b\u0001\b\u0001\b\u0001\t\u0001\t\u0001\t\u0001"+
 		"\t\u0001\t\u0001\t\u0005\t\u0112\b\t\n\t\f\t\u0115\t\t\u0001\n\u0001\n"+
 		"\u0001\n\u0001\n\u0001\n\u0001\u000b\u0001\u000b\u0001\u000b\u0001\u000b"+
-		"\u0001\u000b\u0001\u000b\u0001\u000b\u0003\u000b\u0123\b\u000b\u0001\f"+
-		"\u0001\f\u0001\f\u0001\f\u0001\f\u0001\f\u0001\f\u0001\f\u0001\f\u0001"+
-		"\f\u0001\f\u0001\f\u0001\f\u0001\f\u0001\f\u0001\f\u0001\f\u0005\f\u0136"+
-		"\b\f\n\f\f\f\u0139\t\f\u0001\f\u0001\f\u0001\f\u0003\f\u013e\b\f\u0001"+
-		"\r\u0001\r\u0001\r\u0001\r\u0001\r\u0001\r\u0004\r\u0146\b\r\u000b\r\f"+
-		"\r\u0147\u0001\r\u0000\u0001\u0004\u000e\u0000\u0002\u0004\u0006\b\n\f"+
+		"\u0001\u000b\u0005\u000b\u0121\b\u000b\n\u000b\f\u000b\u0124\t\u000b\u0001"+
+		"\f\u0001\f\u0001\f\u0001\f\u0001\f\u0001\f\u0001\f\u0001\f\u0001\f\u0001"+
+		"\f\u0001\f\u0001\f\u0001\f\u0001\f\u0001\f\u0001\f\u0001\f\u0005\f\u0137"+
+		"\b\f\n\f\f\f\u013a\t\f\u0001\f\u0001\f\u0001\f\u0003\f\u013f\b\f\u0001"+
+		"\r\u0001\r\u0001\r\u0001\r\u0001\r\u0001\r\u0004\r\u0147\b\r\u000b\r\f"+
+		"\r\u0148\u0001\r\u0000\u0001\u0004\u000e\u0000\u0002\u0004\u0006\b\n\f"+
 		"\u000e\u0010\u0012\u0014\u0016\u0018\u001a\u0000\u0004\u0001\u0000\u000e"+
 		"\u0010\u0002\u0000\f\f\u0011\u0011\u0001\u0000\u0012\u0017\u0001\u0000"+
-		"\u0018\u0019\u0166\u0000%\u0001\u0000\u0000\u0000\u0002-\u0001\u0000\u0000"+
+		"\u0018\u0019\u0167\u0000%\u0001\u0000\u0000\u0000\u0002-\u0001\u0000\u0000"+
 		"\u0000\u0004f\u0001\u0000\u0000\u0000\u0006\u0094\u0001\u0000\u0000\u0000"+
 		"\b\u00c2\u0001\u0000\u0000\u0000\n\u00d1\u0001\u0000\u0000\u0000\f\u00d3"+
 		"\u0001\u0000\u0000\u0000\u000e\u00dd\u0001\u0000\u0000\u0000\u0010\u00e7"+
 		"\u0001\u0000\u0000\u0000\u0012\u010b\u0001\u0000\u0000\u0000\u0014\u0116"+
-		"\u0001\u0000\u0000\u0000\u0016\u0122\u0001\u0000\u0000\u0000\u0018\u013d"+
-		"\u0001\u0000\u0000\u0000\u001a\u0145\u0001\u0000\u0000\u0000\u001c\u001d"+
+		"\u0001\u0000\u0000\u0000\u0016\u011b\u0001\u0000\u0000\u0000\u0018\u013e"+
+		"\u0001\u0000\u0000\u0000\u001a\u0146\u0001\u0000\u0000\u0000\u001c\u001d"+
 		"\u0003\u0014\n\u0000\u001d\u001e\u0005\u0001\u0000\u0000\u001e\u001f\u0006"+
 		"\u0000\uffff\uffff\u0000\u001f$\u0001\u0000\u0000\u0000 !\u0003\u0010"+
 		"\b\u0000!\"\u0006\u0000\uffff\uffff\u0000\"$\u0001\u0000\u0000\u0000#"+
@@ -1785,35 +1784,35 @@ public class PmmParser extends Parser {
 		"\u0000\u0000\u0000\u0115\u0113\u0001\u0000\u0000\u0000\u0116\u0117\u0003"+
 		"\u0016\u000b\u0000\u0117\u0118\u0005\u0006\u0000\u0000\u0118\u0119\u0003"+
 		"\u0018\f\u0000\u0119\u011a\u0006\n\uffff\uffff\u0000\u011a\u0015\u0001"+
-		"\u0000\u0000\u0000\u011b\u011c\u0005)\u0000\u0000\u011c\u0123\u0006\u000b"+
-		"\uffff\uffff\u0000\u011d\u011e\u0005)\u0000\u0000\u011e\u011f\u0005\u001a"+
-		"\u0000\u0000\u011f\u0120\u0003\u0016\u000b\u0000\u0120\u0121\u0006\u000b"+
-		"\uffff\uffff\u0000\u0121\u0123\u0001\u0000\u0000\u0000\u0122\u011b\u0001"+
-		"\u0000\u0000\u0000\u0122\u011d\u0001\u0000\u0000\u0000\u0123\u0017\u0001"+
-		"\u0000\u0000\u0000\u0124\u0125\u0005\"\u0000\u0000\u0125\u013e\u0006\f"+
-		"\uffff\uffff\u0000\u0126\u0127\u0005#\u0000\u0000\u0127\u013e\u0006\f"+
-		"\uffff\uffff\u0000\u0128\u0129\u0005$\u0000\u0000\u0129\u013e\u0006\f"+
-		"\uffff\uffff\u0000\u012a\u012b\u0005\t\u0000\u0000\u012b\u012c\u0005*"+
-		"\u0000\u0000\u012c\u012d\u0005\n\u0000\u0000\u012d\u012e\u0003\u0018\f"+
-		"\u0000\u012e\u012f\u0006\f\uffff\uffff\u0000\u012f\u013e\u0001\u0000\u0000"+
-		"\u0000\u0130\u0131\u0005%\u0000\u0000\u0131\u0137\u0005\u0007\u0000\u0000"+
-		"\u0132\u0133\u0003\u001a\r\u0000\u0133\u0134\u0006\f\uffff\uffff\u0000"+
-		"\u0134\u0136\u0001\u0000\u0000\u0000\u0135\u0132\u0001\u0000\u0000\u0000"+
-		"\u0136\u0139\u0001\u0000\u0000\u0000\u0137\u0135\u0001\u0000\u0000\u0000"+
-		"\u0137\u0138\u0001\u0000\u0000\u0000\u0138\u013a\u0001\u0000\u0000\u0000"+
-		"\u0139\u0137\u0001\u0000\u0000\u0000\u013a\u013e\u0005\b\u0000\u0000\u013b"+
-		"\u013c\u0005&\u0000\u0000\u013c\u013e\u0006\f\uffff\uffff\u0000\u013d"+
-		"\u0124\u0001\u0000\u0000\u0000\u013d\u0126\u0001\u0000\u0000\u0000\u013d"+
-		"\u0128\u0001\u0000\u0000\u0000\u013d\u012a\u0001\u0000\u0000\u0000\u013d"+
-		"\u0130\u0001\u0000\u0000\u0000\u013d\u013b\u0001\u0000\u0000\u0000\u013e"+
-		"\u0019\u0001\u0000\u0000\u0000\u013f\u0140\u0003\u0016\u000b\u0000\u0140"+
-		"\u0141\u0005\u0006\u0000\u0000\u0141\u0142\u0003\u0018\f\u0000\u0142\u0143"+
-		"\u0005\u0001\u0000\u0000\u0143\u0144\u0006\r\uffff\uffff\u0000\u0144\u0146"+
-		"\u0001\u0000\u0000\u0000\u0145\u013f\u0001\u0000\u0000\u0000\u0146\u0147"+
-		"\u0001\u0000\u0000\u0000\u0147\u0145\u0001\u0000\u0000\u0000\u0147\u0148"+
-		"\u0001\u0000\u0000\u0000\u0148\u001b\u0001\u0000\u0000\u0000\u0017#%9"+
-		"Af\u0086\u0088\u0094\u00af\u00c2\u00ca\u00d1\u00d8\u00e2\u00ed\u00f4\u00fd"+
-		"\u0105\u0113\u0122\u0137\u013d\u0147";
+		"\u0000\u0000\u0000\u011b\u011c\u0005)\u0000\u0000\u011c\u0122\u0006\u000b"+
+		"\uffff\uffff\u0000\u011d\u011e\u0005\u001a\u0000\u0000\u011e\u011f\u0005"+
+		")\u0000\u0000\u011f\u0121\u0006\u000b\uffff\uffff\u0000\u0120\u011d\u0001"+
+		"\u0000\u0000\u0000\u0121\u0124\u0001\u0000\u0000\u0000\u0122\u0120\u0001"+
+		"\u0000\u0000\u0000\u0122\u0123\u0001\u0000\u0000\u0000\u0123\u0017\u0001"+
+		"\u0000\u0000\u0000\u0124\u0122\u0001\u0000\u0000\u0000\u0125\u0126\u0005"+
+		"\"\u0000\u0000\u0126\u013f\u0006\f\uffff\uffff\u0000\u0127\u0128\u0005"+
+		"#\u0000\u0000\u0128\u013f\u0006\f\uffff\uffff\u0000\u0129\u012a\u0005"+
+		"$\u0000\u0000\u012a\u013f\u0006\f\uffff\uffff\u0000\u012b\u012c\u0005"+
+		"\t\u0000\u0000\u012c\u012d\u0005*\u0000\u0000\u012d\u012e\u0005\n\u0000"+
+		"\u0000\u012e\u012f\u0003\u0018\f\u0000\u012f\u0130\u0006\f\uffff\uffff"+
+		"\u0000\u0130\u013f\u0001\u0000\u0000\u0000\u0131\u0132\u0005%\u0000\u0000"+
+		"\u0132\u0138\u0005\u0007\u0000\u0000\u0133\u0134\u0003\u001a\r\u0000\u0134"+
+		"\u0135\u0006\f\uffff\uffff\u0000\u0135\u0137\u0001\u0000\u0000\u0000\u0136"+
+		"\u0133\u0001\u0000\u0000\u0000\u0137\u013a\u0001\u0000\u0000\u0000\u0138"+
+		"\u0136\u0001\u0000\u0000\u0000\u0138\u0139\u0001\u0000\u0000\u0000\u0139"+
+		"\u013b\u0001\u0000\u0000\u0000\u013a\u0138\u0001\u0000\u0000\u0000\u013b"+
+		"\u013f\u0005\b\u0000\u0000\u013c\u013d\u0005&\u0000\u0000\u013d\u013f"+
+		"\u0006\f\uffff\uffff\u0000\u013e\u0125\u0001\u0000\u0000\u0000\u013e\u0127"+
+		"\u0001\u0000\u0000\u0000\u013e\u0129\u0001\u0000\u0000\u0000\u013e\u012b"+
+		"\u0001\u0000\u0000\u0000\u013e\u0131\u0001\u0000\u0000\u0000\u013e\u013c"+
+		"\u0001\u0000\u0000\u0000\u013f\u0019\u0001\u0000\u0000\u0000\u0140\u0141"+
+		"\u0003\u0016\u000b\u0000\u0141\u0142\u0005\u0006\u0000\u0000\u0142\u0143"+
+		"\u0003\u0018\f\u0000\u0143\u0144\u0005\u0001\u0000\u0000\u0144\u0145\u0006"+
+		"\r\uffff\uffff\u0000\u0145\u0147\u0001\u0000\u0000\u0000\u0146\u0140\u0001"+
+		"\u0000\u0000\u0000\u0147\u0148\u0001\u0000\u0000\u0000\u0148\u0146\u0001"+
+		"\u0000\u0000\u0000\u0148\u0149\u0001\u0000\u0000\u0000\u0149\u001b\u0001"+
+		"\u0000\u0000\u0000\u0017#%9Af\u0086\u0088\u0094\u00af\u00c2\u00ca\u00d1"+
+		"\u00d8\u00e2\u00ed\u00f4\u00fd\u0105\u0113\u0122\u0138\u013e\u0148";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
