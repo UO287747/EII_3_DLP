@@ -2,9 +2,10 @@ package ast.types;
 
 import ast.AbstractASTNode;
 import ast.Type;
-import ast.ErrorHandler;
+import errorhandler.ErrorHandler;
+import visitor.Visitor;
 
-public class ErrorType extends AbstractASTNode implements Type {
+public class ErrorType extends AbstractType {
 
     private String message;
 
@@ -25,5 +26,10 @@ public class ErrorType extends AbstractASTNode implements Type {
                 ", line=" + line +
                 ", column=" + column +
                 '}';
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP param) {
+        return visitor.visit(this, param);
     }
 }

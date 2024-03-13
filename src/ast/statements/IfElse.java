@@ -3,10 +3,11 @@ package ast.statements;
 import ast.AbstractASTNode;
 import ast.Expression;
 import ast.Statement;
+import visitor.Visitor;
 
 import java.util.List;
 
-public class IfElse extends AbstractASTNode implements Statement {
+public class IfElse extends AbstractStatement {
 
     private List<Statement> ifBody;
     private List<Statement> elseBody;
@@ -29,6 +30,10 @@ public class IfElse extends AbstractASTNode implements Statement {
         return elseBody;
     }
 
+    public Expression getCondition() {
+        return condition;
+    }
+
     @Override
     public String toString() {
         return "IfElse{" +
@@ -38,5 +43,10 @@ public class IfElse extends AbstractASTNode implements Statement {
                 ", line=" + line +
                 ", column=" + column +
                 '}';
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP param) {
+        return visitor.visit(this, param);
     }
 }

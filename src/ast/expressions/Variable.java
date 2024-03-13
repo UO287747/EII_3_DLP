@@ -1,8 +1,8 @@
 package ast.expressions;
 
-import ast.Definition;
+import visitor.Visitor;
 
-public class Variable extends AbstractExpresion {
+public class Variable extends AbstractExpression {
 
     private String name;
 
@@ -22,5 +22,10 @@ public class Variable extends AbstractExpresion {
                 ", line=" + line +
                 ", column=" + column +
                 '}';
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP param) {
+        return visitor.visit(this, param);
     }
 }

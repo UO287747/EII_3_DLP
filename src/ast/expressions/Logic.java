@@ -1,8 +1,9 @@
 package ast.expressions;
 
 import ast.Expression;
+import visitor.Visitor;
 
-public class Logic extends AbstractExpresion {
+public class Logic extends AbstractExpression {
 
     private String OP;
 
@@ -37,5 +38,10 @@ public class Logic extends AbstractExpresion {
                 ", line=" + line +
                 ", column=" + column +
                 '}';
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP param) {
+        return visitor.visit(this, param);
     }
 }

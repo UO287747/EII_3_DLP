@@ -1,5 +1,7 @@
 package ast;
 
+import visitor.Visitor;
+
 import java.util.Objects;
 
 public class RecordField extends AbstractASTNode {
@@ -39,5 +41,10 @@ public class RecordField extends AbstractASTNode {
                 ", column=" + column +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP param) {
+        return visitor.visit(this, param);
     }
 }

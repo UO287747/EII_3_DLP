@@ -1,4 +1,4 @@
-package ast;
+package errorhandler;
 
 import ast.types.ErrorType;
 

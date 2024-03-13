@@ -2,10 +2,11 @@ package ast.expressions;
 
 import ast.Expression;
 import ast.Statement;
+import visitor.Visitor;
 
 import java.util.List;
 
-public class FuncInvocation extends AbstractExpresion implements Statement {
+public class FuncInvocation extends AbstractExpression implements Statement {
 
     private List<Expression> expressions;
     private Variable variable;
@@ -32,5 +33,10 @@ public class FuncInvocation extends AbstractExpresion implements Statement {
                 ", line=" + line +
                 ", column=" + column +
                 '}';
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP param) {
+        return visitor.visit(this, param);
     }
 }

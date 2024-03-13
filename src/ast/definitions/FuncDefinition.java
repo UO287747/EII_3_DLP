@@ -4,13 +4,11 @@ import ast.AbstractASTNode;
 import ast.Definition;
 import ast.Statement;
 import ast.Type;
+import visitor.Visitor;
 
 import java.util.List;
 
-public class FuncDefinition extends AbstractASTNode implements Definition {
-
-    private Type type;
-    private String name;
+public class FuncDefinition extends AbstractDefinition  {
 
     private List<Statement> statements;
     private List<VarDefinition> varDefinitions;
@@ -23,16 +21,6 @@ public class FuncDefinition extends AbstractASTNode implements Definition {
 
         this.varDefinitions = variableDefinitions;
         this.statements = statements;
-    }
-
-    @Override
-    public Type getType() {
-        return type;
-    }
-
-    @Override
-    public String getName() {
-        return name;
     }
 
     public List<Statement> getStatements() {
@@ -53,5 +41,10 @@ public class FuncDefinition extends AbstractASTNode implements Definition {
                 ", statements=" + statements +
                 ", varDefinitions=" + varDefinitions +
                 '}';
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP param) {
+        return visitor.visit(this, param);
     }
 }

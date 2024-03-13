@@ -3,8 +3,9 @@ package ast.statements;
 import ast.AbstractASTNode;
 import ast.Expression;
 import ast.Statement;
+import visitor.Visitor;
 
-public class Return extends AbstractASTNode implements Statement {
+public class Return extends AbstractStatement {
 
     private Expression expression;
 
@@ -20,5 +21,10 @@ public class Return extends AbstractASTNode implements Statement {
                 ", line=" + line +
                 ", column=" + column +
                 '}';
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP param) {
+        return visitor.visit(this, param);
     }
 }

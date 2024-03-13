@@ -1,8 +1,9 @@
 package ast.expressions;
 
 import ast.Expression;
+import visitor.Visitor;
 
-public class StructAccess extends AbstractExpresion {
+public class StructAccess extends AbstractExpression {
 
     private String field;
     private Expression expression;
@@ -29,5 +30,10 @@ public class StructAccess extends AbstractExpresion {
                 ", line=" + line +
                 ", column=" + column +
                 '}';
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP param) {
+        return visitor.visit(this, param);
     }
 }

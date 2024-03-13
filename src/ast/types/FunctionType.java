@@ -3,10 +3,11 @@ package ast.types;
 import ast.AbstractASTNode;
 import ast.Type;
 import ast.definitions.VarDefinition;
+import visitor.Visitor;
 
 import java.util.List;
 
-public class FunctionType extends AbstractASTNode implements Type {
+public class FunctionType extends AbstractType {
 
     private Type returnType;
     private List<VarDefinition> params;
@@ -33,5 +34,10 @@ public class FunctionType extends AbstractASTNode implements Type {
                 ", returnType=" + returnType +
                 ", params=" + params +
                 '}';
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP param) {
+        return visitor.visit(this, param);
     }
 }

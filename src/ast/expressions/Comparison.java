@@ -1,8 +1,9 @@
 package ast.expressions;
 
 import ast.Expression;
+import visitor.Visitor;
 
-public class Comparison extends AbstractExpresion {
+public class Comparison extends AbstractExpression {
 
     private Expression left;
     private Expression right;
@@ -37,5 +38,10 @@ public class Comparison extends AbstractExpresion {
                 ", line=" + line +
                 ", column=" + column +
                 '}';
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP param) {
+        return visitor.visit(this, param);
     }
 }
