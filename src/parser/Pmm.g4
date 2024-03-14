@@ -39,10 +39,10 @@ expression returns [Expression ast]:
             | '('type')' e1=expression { $ast = new Cast($type.ast.getLine(), $type.ast.getColumn(), $e1.ast, $type.ast); }
             | '-' e1=expression { $ast = new UnaryMinus($e1.ast.getLine(), $e1.ast.getColumn(), $e1.ast); }
             | '!' e1=expression { $ast = new UnaryNot($e1.ast.getLine(), $e1.ast.getColumn(), $e1.ast); }
-            | e1=expression OP=('*'|'/'|'%') e2=expression { new Arithmetic($OP.getLine(), $OP.getCharPositionInLine()+1, $e1.ast, $e2.ast, $OP.text); }
-            | e1=expression OP=('+'|'-') e2=expression { new Arithmetic($OP.getLine(), $OP.getCharPositionInLine()+1, $e1.ast, $e2.ast, $OP.text); }
-            | e1=expression OP=('>'|'>='|'<'|'<='|'=='|'!=') e2=expression { new Comparison($OP.getLine(), $OP.getCharPositionInLine()+1, $e1.ast, $e2.ast, $OP.text); }
-            | e1=expression OP=('&&'|'||') e2=expression { new Logic($OP.getLine(), $OP.getCharPositionInLine()+1, $e1.ast, $e2.ast, $OP.text); };
+            | e1=expression OP=('*'|'/'|'%') e2=expression { $ast = new Arithmetic($OP.getLine(), $OP.getCharPositionInLine()+1, $e1.ast, $e2.ast, $OP.text); }
+            | e1=expression OP=('+'|'-') e2=expression { $ast = new Arithmetic($OP.getLine(), $OP.getCharPositionInLine()+1, $e1.ast, $e2.ast, $OP.text); }
+            | e1=expression OP=('>'|'>='|'<'|'<='|'=='|'!=') e2=expression { $ast = new Comparison($OP.getLine(), $OP.getCharPositionInLine()+1, $e1.ast, $e2.ast, $OP.text); }
+            | e1=expression OP=('&&'|'||') e2=expression { $ast = new Logic($OP.getLine(), $OP.getCharPositionInLine()+1, $e1.ast, $e2.ast, $OP.text); };
 
 expressions returns [List<Expression> ast = new ArrayList<Expression>()]:
             expression { $ast.add($expression.ast); }
