@@ -6,8 +6,17 @@ import visitor.Visitor;
 
 public class CharType extends AbstractType {
 
-    public CharType(int line, int column) {
+    private static CharType instance;
+
+    private CharType(int line, int column) {
         super(line, column);
+    }
+
+    public static CharType getInstance() {
+        if (instance == null) {
+            instance = new CharType(0,0);
+        }
+        return instance;
     }
 
     @Override

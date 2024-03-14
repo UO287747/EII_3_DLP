@@ -114,9 +114,9 @@ variables returns [ List<Variable> ast = new ArrayList<Variable>() ] :
             (',' ID { $ast.add(new Variable($ID.getLine(), $ID.getCharPositionInLine()+1, $ID.text)); })*;
 
 type returns [Type ast]:
-    'int' { $ast = new IntType(0,0); }
-      | 'double' { $ast = new DoubleType(0,0); }
-      | 'char' { $ast = new CharType(0,0); }
+    'int' { $ast = IntType.getInstance(); }
+      | 'double' { $ast = DoubleType.getInstance(); }
+      | 'char' { $ast = CharType.getInstance(); }
       | '[' INT_CONSTANT ']' type { $ast = new ArrayType($INT_CONSTANT.getLine(), $INT_CONSTANT.getCharPositionInLine()+1,
                                     LexerHelper.lexemeToInt($INT_CONSTANT.text), $type.ast ); }
       | e='struct' '{' (struct_field{ $ast = new StructType($e.getLine(), $e.getCharPositionInLine()+1, $struct_field.ast); })* '}'

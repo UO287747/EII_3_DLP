@@ -9,7 +9,7 @@ def main(): {
   
   a = 0;
   i = 0;
-  j = -i*a-2;  
+  j = -i*a-2;
   v[(int)(v[j])] = (double)a;
   print 'f', '(', 'i', ')', '=' ,f(i);
 }

@@ -6,8 +6,17 @@ import visitor.Visitor;
 
 public class DoubleType extends AbstractType {
 
+    private static DoubleType instance;
+
     public DoubleType(int line, int column) {
         super(line, column);
+    }
+
+    public static DoubleType getInstance() {
+        if (instance == null) {
+            instance = new DoubleType(0,0);
+        }
+        return instance;
     }
 
     @Override

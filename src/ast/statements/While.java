@@ -18,6 +18,10 @@ public class While extends AbstractStatement {
         this.statements = statements;
     }
 
+    public Expression getCondition() {
+        return condition;
+    }
+
     public List<Statement> getStatements() {
         return statements;
     }
