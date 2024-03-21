@@ -23,7 +23,7 @@ main returns [Definition ast]
                 List<Statement> statements = new ArrayList<Statement>()]:
         'def' e='main' '(' ')' ':' '{' (var_definition';'{ $definitions.addAll($var_definition.ast); })* (statement { $statements.addAll($statement.ast); })* '}'
         {
-            FunctionType ft = new FunctionType($e.getLine(), $e.getCharPositionInLine()+1, new VoidType(0,0), $definitions);
+            FunctionType ft = new FunctionType($e.getLine(), $e.getCharPositionInLine()+1, new VoidType(0,0), new ArrayList<VarDefinition>());
             $ast = new FuncDefinition($e.getLine(), $e.getCharPositionInLine()+1, ft, "main", $definitions, $statements);
         };
 

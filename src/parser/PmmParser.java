@@ -298,7 +298,7 @@ public class PmmParser extends Parser {
 			setState(68);
 			match(T__7);
 
-			            FunctionType ft = new FunctionType(((MainContext)_localctx).e.getLine(), ((MainContext)_localctx).e.getCharPositionInLine()+1, new VoidType(0,0), _localctx.definitions);
+			            FunctionType ft = new FunctionType(((MainContext)_localctx).e.getLine(), ((MainContext)_localctx).e.getCharPositionInLine()+1, new VoidType(0,0), new ArrayList<VarDefinition>());
 			            ((MainContext)_localctx).ast =  new FuncDefinition(((MainContext)_localctx).e.getLine(), ((MainContext)_localctx).e.getCharPositionInLine()+1, ft, "main", _localctx.definitions, _localctx.statements);
 			        
 			}

@@ -38,9 +38,11 @@ public class IdentificationVisitor extends AbstractVisitor<Void,Void> {
 
         Definition definition = symbolTable.find(e.getName());
 
-        if ( definition == null )
-            definition = new VarDefinition(e.getLine(), e.getColumn(),
-                    new ErrorType(e.getLine(), e.getColumn(), "Error: La variable " + e.getName() + " no está definida."), e.getName());
+        if ( definition == null ) {
+
+            ErrorType errorType = new ErrorType(e.getLine(), e.getColumn(), "Error: La variable " + e.getName() + " no está definida.");
+            definition = new VarDefinition(e.getLine(), e.getColumn(), errorType, e.getName());
+        }
 
         e.setDefinition(definition);
 
