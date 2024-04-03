@@ -1,0 +1,51 @@
+
+G {
+    (1) Program: program -> (Definition)*
+    (2) RecordField: field → type ID
+
+    (3) IntType: type -> INT
+    (4) DoubleType: type -> DOUBLE
+    (5) CharType: type -> CHAR
+    (6) ArrayType: type -> type [ INT_CONSTANT ]
+    (7) StructType: type -> field*
+    (8) FunctionType: type -> type vardefinition*
+    (9) ErrorType: type ->
+    (10) Void: type ->
+
+    (11) VarDefinition: definition -> type ID
+    (12) FuncDefinition: definition -> type ID vardefinition* statement*
+
+    (13) Arithmetic: expression1 -> expression2 (+|-|*|/) expression3
+    (14) ArrayAccess: expression1 -> expression2 expression3
+    (15) Cast: expression1 -> type expression2
+    (16) CharLiteral: expression1 -> CHAR_CONSTANT
+    (17) Comparison: expression1 -> expression2 (<|>|<=|>=|==|!=) expression3
+    (18) FuncInvocation: expression1 -> expression2 expression3*
+    (19) IntLiteral: expression1 -> INT_CONSTANT
+    (20) Logic: expression1 -> expression2 (&& | ||)
+    (21) RealLiteral: expression1 -> REAL_CONSTANT
+    (22) StructAccess: expression1 -> expression2 ID
+    (23) UnaryMinus: expression1 -> expression2
+    (24) UnaryNot: expression1 -> expression2
+    (25) Variable: expression1 -> ID
+
+    (26) Assignment: expression1 -> expression2 expression3
+    (27) IfElse: statement1 -> expression statement2* statement3*
+    (28) Input: statement1 -> expression
+    (29) Print: statement1 -> expression
+    (30) Return: statement1 -> expression
+    (31) While: statement1 -> expression statement2*
+}
+
+A { expression.type C Type }
+
+R {
+    (13) expression1.type = expression2.type.arithmetic(expression3.type)
+    (14) expression1.type = expression2.type.squareBrackets(expression3.type)
+    (15) expression1.type = expression2.type.canBeCastTo(type)
+    (16) expression1.type = IntType.getInstance()
+    (17) expression1.type = expression2.type.comparison(expression3.type)
+    (18) expression1.type = expression2.type.parenthesis(expression3.type)
+    (19) expression1.type = IntType.getInstance()
+    (20) expression1.type = expression2.type.logic(expression3.type)
+}
