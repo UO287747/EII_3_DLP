@@ -1,5 +1,5 @@
 
-G {
+P {
     (1) Program: program -> (Definition)*
     (2) RecordField: field → type ID
 
@@ -29,7 +29,7 @@ G {
     (24) UnaryNot: expression1 -> expression2
     (25) Variable: expression1 -> ID
 
-    (26) Assignment: expression1 -> expression2 expression3
+    (26) Assignment: statement1 -> expression1 expression2
     (27) IfElse: statement1 -> expression statement2* statement3*
     (28) Input: statement1 -> expression
     (29) Print: statement1 -> expression
@@ -48,4 +48,16 @@ R {
     (18) expression1.type = expression2.type.parenthesis(expression3.type)
     (19) expression1.type = IntType.getInstance()
     (20) expression1.type = expression2.type.logic(expression3.type)
+    (21) expression1.type = RealType.getInstance()
+    (22) expression1.type = expression2.type.dot(ID)
+    (23) expression1.type = expression2.type.arithmetic()
+    (24) expression1.type = expression2.type.logic()
+    (25) expression1.type = expression1.definition.type
+
+    (26) expression2.type.promotesTo(expression1.type)
+    (27) expression.type.asLogical()
+    (28) expression.type.asBuiltInType()
+    (29) expression.type.asBuiltInType()
+    (30) expression.type.promotesTo(statement.returnType)
+    (31) expression.type.asLogical()
 }

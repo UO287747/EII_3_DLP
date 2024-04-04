@@ -6,6 +6,8 @@ public interface Expression extends ASTNode {
 
     void setLvalue(boolean lvalue);
 
-    //getset type
+    Type getType();
+
+    void setType(Type type);
 
 }

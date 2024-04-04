@@ -8,6 +8,8 @@ public abstract class AbstractExpression extends AbstractASTNode implements Expr
 
     boolean lvalue;
 
+    Type type;
+
     public AbstractExpression(int line, int column) {
         super(line, column);
     }
@@ -22,4 +24,13 @@ public abstract class AbstractExpression extends AbstractASTNode implements Expr
         this.lvalue = lvalue;
     }
 
+    @Override
+    public Type getType() {
+        return type;
+    }
+
+    @Override
+    public void setType(Type type) {
+        this.type = type;
+    }
 }
