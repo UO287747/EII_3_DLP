@@ -3,7 +3,6 @@ package ast.types;
 import ast.ASTNode;
 import ast.AbstractASTNode;
 import ast.Type;
-import ast.types.ErrorType;
 
 import java.util.List;
 
@@ -87,6 +86,11 @@ public abstract class AbstractType extends AbstractASTNode implements Type  {
     @Override
     public  Type parenthesis(List<Type> list, ASTNode ast) {
 
+        return new ErrorType(ast.getLine(), ast.getColumn(), "Error: parámetros incorrectos.");
+    }
 
+    @Override
+    public boolean isBuiltInType(ASTNode ast){
+        return false;
     }
 }

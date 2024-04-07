@@ -1,5 +1,6 @@
 package ast.types;
 
+import ast.ASTNode;
 import ast.AbstractASTNode;
 import ast.Type;
 import ast.definitions.VarDefinition;
@@ -39,5 +40,19 @@ public class FunctionType extends AbstractType {
     @Override
     public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP param) {
         return visitor.visit(this, param);
+    }
+
+    @Override
+    public  Type parenthesis(List<Type> list, ASTNode ast) {
+
+        if (list.size() != params.size()) { return super.parenthesis(list, ast); }
+
+        for (int i = 0; i < list.size(); i++) {
+
+            if (list.get(i).promotesTo(params.get(i).getType(), ast) instanceof ErrorType) {
+                return super.parenthesis(list, ast);
+            }
+        }
+        return returnType;
     }
 }

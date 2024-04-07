@@ -1,5 +1,6 @@
 package ast.types;
 
+import ast.ASTNode;
 import ast.AbstractASTNode;
 import ast.Type;
 import visitor.Visitor;
@@ -21,14 +22,72 @@ public class IntType extends AbstractType {
 
     @Override
     public String toString() {
-        return "Integer{" +
-                "line=" + line +
-                ", column=" + column +
-                '}';
+        return "Integer";
     }
 
     @Override
     public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP param) {
         return visitor.visit(this, param);
+    }
+
+    @Override
+    public Type asBuiltInType(ASTNode ast) {
+
+        return IntType.getInstance();
+    }
+
+    @Override
+    public Type arithmetic(Type type, ASTNode ast) {
+
+        if (type.isBuiltInType(ast)) { return IntType.getInstance(); }
+        return super.arithmetic(type, ast);
+    }
+
+    @Override
+    public Type arithmetic(ASTNode ast) {
+        return IntType.getInstance();
+    }
+
+    @Override
+    public Type logic(Type type, ASTNode ast) {
+
+        if (type.equals(IntType.getInstance())) { return IntType.getInstance(); }
+        return super.comparison(type, ast);
+    //
+        //
+        //
+        //
+    }
+
+    @Override
+    public Type logic(ASTNode ast) {
+
+        return IntType.getInstance();
+    }
+
+    @Override
+    public Type promotesTo(Type type, ASTNode ast) {
+
+        if (type.equals(IntType.getInstance()) || type.equals(DoubleType.getInstance())) { return type; }
+        return super.promotesTo(type, ast);
+    }
+
+    @Override
+    public Type canBeCastTo(Type type, ASTNode ast) {
+
+        if (type.isBuiltInType(ast)) { return type; }
+        return super.canBeCastTo(type, ast);
+    }
+
+    @Override
+    public Type comparison(Type type, ASTNode ast) {
+
+        if (type.isBuiltInType(ast)) { return IntType.getInstance(); }
+        return super.comparison(type, ast);
+    }
+
+    @Override
+    public boolean isBuiltInType(ASTNode ast){
+        return true;
     }
 }

@@ -27,4 +27,6 @@ public interface Type extends ASTNode {
     Type dot(String id, ASTNode ast);
 
     Type parenthesis(List<Type> list, ASTNode ast);
+
+    boolean isBuiltInType(ASTNode ast);
 }

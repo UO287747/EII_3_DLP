@@ -9,8 +9,8 @@ P {
     (6) ArrayType: type -> type [ INT_CONSTANT ]
     (7) StructType: type -> field*
     (8) FunctionType: type -> type vardefinition*
-    (9) ErrorType: type ->
-    (10) Void: type ->
+    (9) ErrorType: type -> ErrorType
+    (10) Void: type -> Void
 
     (11) VarDefinition: definition -> type ID
     (12) FuncDefinition: definition -> type ID vardefinition* statement*
