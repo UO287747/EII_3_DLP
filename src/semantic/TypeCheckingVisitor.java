@@ -18,8 +18,8 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void,Void> {
 
         e.getLeft().accept(this, param);
         e.getRight().accept(this, param);
-        e.setType(e.getLeft().getType().arithmetic(e.getRight().getType(), e));
         e.setLvalue(false);
+        e.setType(e.getLeft().getType().arithmetic(e.getRight().getType(), e));
         return null;
     }
 
@@ -28,8 +28,8 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void,Void> {
 
         e.getLeft().accept(this, param);
         e.getRight().accept(this, param);
-        e.setType(e.getLeft().getType().squareBrackets(e.getRight().getType(), e));
         e.setLvalue(true);
+        e.setType(e.getLeft().getType().squareBrackets(e.getRight().getType(), e));
         return null;
     }
 
@@ -38,16 +38,16 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void,Void> {
 
         e.getType().accept(this, param);
         e.getExpression().accept(this, param);
-        e.setType(e.getExpression().getType().canBeCastTo(e.getType(), e));
         e.setLvalue(false);
+        e.setType(e.getExpression().getType().canBeCastTo(e.getType(), e));
         return null;
     }
 
     @Override
     public Void visit(CharLiteral e, Void param) {
 
-        e.setType(CharType.getInstance());
         e.setLvalue(false);
+        e.setType(CharType.getInstance());
         return null;
     }
 
@@ -56,8 +56,8 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void,Void> {
 
         e.getLeft().accept(this, param);
         e.getRight().accept(this, param);
-        e.setType(e.getLeft().getType().comparison(e.getRight().getType(), e));
         e.setLvalue(false);
+        e.setType(e.getLeft().getType().comparison(e.getRight().getType(), e));
         return null;
     }
 
@@ -68,17 +68,17 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void,Void> {
         for (Expression expression : e.getExpressions()) {
             expression.accept(this, param);
         }
+        e.setLvalue(false);
         e.setType(e.getVariable().getDefinition().getType().parenthesis(
                 e.getExpressions().stream().map(Expression::getType).collect(Collectors.toList()), e));
-        e.setLvalue(false);
         return null;
     }
 
     @Override
     public Void visit(IntLiteral e, Void param) {
 
-        e.setType(IntType.getInstance());
         e.setLvalue(false);
+        e.setType(IntType.getInstance());
         return null;
     }
 
@@ -87,16 +87,16 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void,Void> {
 
         e.getLeft().accept(this, param);
         e.getRight().accept(this, param);
-        e.setType(e.getLeft().getType().logic(e.getRight().getType(), e));
         e.setLvalue(false);
+        e.setType(e.getLeft().getType().logic(e.getRight().getType(), e));
         return null;
     }
 
     @Override
     public Void visit(RealLiteral e, Void param) {
 
-        e.setType(DoubleType.getInstance());
         e.setLvalue(false);
+        e.setType(DoubleType.getInstance());
         return null;
     }
 
@@ -104,8 +104,8 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void,Void> {
     public Void visit(StructAccess e, Void param) {
 
         e.getExpression().accept(this, param);
-        e.setType(e.getExpression().getType().dot(e.getName(), e));
         e.setLvalue(true);
+        e.setType(e.getExpression().getType().dot(e.getName(), e));
         return null;
     }
 
@@ -113,8 +113,8 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void,Void> {
     public Void visit(UnaryMinus e, Void param) {
 
         e.getExpression().accept(this, param);
-        e.setType(e.getType().arithmetic(e));
         e.setLvalue(false);
+        e.setType(e.getType().arithmetic(e));
         return null;
     }
 
@@ -122,16 +122,16 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void,Void> {
     public Void visit(UnaryNot e, Void param) {
 
         e.getExpression().accept(this, param);
-        e.setType(e.getExpression().getType().logic(e));
         e.setLvalue(false);
+        e.setType(e.getExpression().getType().logic(e));
         return null;
     }
 
     @Override
     public Void visit(Variable e, Void param) {
 
-        e.setType(e.getDefinition().getType());
         e.setLvalue(true);
+        e.setType(e.getDefinition().getType());
         return null;
     }
 

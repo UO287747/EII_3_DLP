@@ -15,12 +15,20 @@ public abstract class AbstractType extends AbstractASTNode implements Type  {
     @Override
     public Type asBuiltInType(ASTNode ast) {
 
+        if (this instanceof ErrorType)
+            return this;
+        if (this.isBuiltInType(ast))
+            return this;
         return new ErrorType(ast.getLine(), ast.getColumn(), "Error: se esperaba un tipo primitivo.");
     }
 
     @Override
     public Type asLogical(ASTNode ast) {
 
+        if (this instanceof ErrorType)
+            return this;
+        if (this.isLogical(ast))
+            return this;
         return new ErrorType(ast.getLine(), ast.getColumn(), "Error: se esperaba un tipo logico.");
     }
 
@@ -91,6 +99,11 @@ public abstract class AbstractType extends AbstractASTNode implements Type  {
 
     @Override
     public boolean isBuiltInType(ASTNode ast){
+        return false;
+    }
+
+    @Override
+    public boolean isLogical(ASTNode ast){
         return false;
     }
 }

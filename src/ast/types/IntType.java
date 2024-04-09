@@ -53,10 +53,6 @@ public class IntType extends AbstractType {
 
         if (type.equals(IntType.getInstance())) { return IntType.getInstance(); }
         return super.comparison(type, ast);
-    //
-        //
-        //
-        //
     }
 
     @Override
@@ -88,6 +84,11 @@ public class IntType extends AbstractType {
 
     @Override
     public boolean isBuiltInType(ASTNode ast){
+        return true;
+    }
+
+    @Override
+    public boolean isLogical(ASTNode ast){
         return true;
     }
 }
