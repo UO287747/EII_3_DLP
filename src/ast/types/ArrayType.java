@@ -45,4 +45,9 @@ public class ArrayType extends AbstractType {
         if (type.equals(IntType.getInstance())) { return this.getType(); }
         return super.squareBrackets(type, ast);
     }
+
+    @Override
+    public int numberOfBytes() {
+        return size * OF.numberOfBytes();
+    }
 }

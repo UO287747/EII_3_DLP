@@ -8,6 +8,7 @@ import java.util.List;
 
 public abstract class AbstractType extends AbstractASTNode implements Type  {
 
+    // todos los que reciben type comprobar error
     public AbstractType(int line, int column) {
         super(line, column);
     }
@@ -35,6 +36,8 @@ public abstract class AbstractType extends AbstractASTNode implements Type  {
     @Override
     public Type arithmetic(Type type, ASTNode ast) {
 
+        if (type instanceof ErrorType)
+            return this;
         return new ErrorType(ast.getLine(), ast.getColumn(),
                 "Error: no se puede realizar la operacion para los tipos " + type + " - " + this);
     }
@@ -48,7 +51,8 @@ public abstract class AbstractType extends AbstractASTNode implements Type  {
     @Override
     public Type logic(Type type, ASTNode ast) {
 
-        if ( type instanceof ErrorType ) { return type; }
+        if (type instanceof ErrorType)
+            return this;
         return new ErrorType(ast.getLine(), ast.getColumn(), "Error: se esperaba un tipo logico.");
     }
 
@@ -61,6 +65,8 @@ public abstract class AbstractType extends AbstractASTNode implements Type  {
     @Override
     public Type promotesTo(Type type, ASTNode ast) {
 
+        if (type instanceof ErrorType)
+            return this;
         return new ErrorType(ast.getLine(), ast.getColumn(),
                 "Error: un " + this + " no puede promocionar a " + type + ".");
     }
@@ -68,6 +74,8 @@ public abstract class AbstractType extends AbstractASTNode implements Type  {
     @Override
     public Type canBeCastTo(Type type, ASTNode ast) {
 
+        if (type instanceof ErrorType)
+            return this;
         return new ErrorType(ast.getLine(), ast.getColumn(),
                 "Error: no se puede hacer cast de " + this + " a " + type + ".");
     }
@@ -75,6 +83,8 @@ public abstract class AbstractType extends AbstractASTNode implements Type  {
     @Override
     public Type comparison(Type type, ASTNode ast) {
 
+        if (type instanceof ErrorType)
+            return this;
         return new ErrorType(ast.getLine(), ast.getColumn(),
                 "Error: no se pueden comparar los tipos " + this + " - " + type + ".");
     }
@@ -82,6 +92,8 @@ public abstract class AbstractType extends AbstractASTNode implements Type  {
     @Override
     public Type squareBrackets(Type type, ASTNode ast) {
 
+        if (type instanceof ErrorType)
+            return this;
         return new ErrorType(ast.getLine(), ast.getColumn(), "Error: se esperaba un tipo Array.");
     }
 
@@ -95,6 +107,11 @@ public abstract class AbstractType extends AbstractASTNode implements Type  {
     public  Type parenthesis(List<Type> list, ASTNode ast) {
 
         return new ErrorType(ast.getLine(), ast.getColumn(), "Error: parámetros incorrectos.");
+    }
+
+    @Override
+    public int numberOfBytes() {
+        throw new IllegalStateException();
     }
 
     @Override

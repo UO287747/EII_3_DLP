@@ -28,6 +28,8 @@ public interface Type extends ASTNode {
 
     Type parenthesis(List<Type> list, ASTNode ast);
 
+    int numberOfBytes();
+
     boolean isBuiltInType(ASTNode ast);
 
     boolean isLogical(ASTNode ast);

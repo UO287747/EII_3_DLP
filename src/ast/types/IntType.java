@@ -83,6 +83,11 @@ public class IntType extends AbstractType {
     }
 
     @Override
+    public int numberOfBytes() {
+        return 2;
+    }
+
+    @Override
     public boolean isBuiltInType(ASTNode ast){
         return true;
     }

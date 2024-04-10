@@ -9,6 +9,7 @@ import java.util.Objects;
 
 public class VarDefinition extends AbstractDefinition {
 
+    private int offset;
 
     public VarDefinition(int line, int column, Type type, String name) {
         super(line, column);
@@ -42,5 +43,13 @@ public class VarDefinition extends AbstractDefinition {
     @Override
     public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP param) {
         return visitor.visit(this, param);
+    }
+
+    public int getOffset() {
+        return offset;
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset;
     }
 }
