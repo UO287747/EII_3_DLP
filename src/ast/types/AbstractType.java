@@ -8,7 +8,6 @@ import java.util.List;
 
 public abstract class AbstractType extends AbstractASTNode implements Type  {
 
-    // todos los que reciben type comprobar error
     public AbstractType(int line, int column) {
         super(line, column);
     }
@@ -123,4 +122,7 @@ public abstract class AbstractType extends AbstractASTNode implements Type  {
     public boolean isLogical(ASTNode ast){
         return false;
     }
+
+    @Override
+    public char suffix() { throw new IllegalStateException(); }
 }

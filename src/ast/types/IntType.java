@@ -96,4 +96,7 @@ public class IntType extends AbstractType {
     public boolean isLogical(ASTNode ast){
         return true;
     }
+
+    @Override
+    public char suffix() { return 'i'; }
 }

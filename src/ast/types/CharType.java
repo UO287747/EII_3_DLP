@@ -72,4 +72,7 @@ public class CharType extends AbstractType {
     public boolean isBuiltInType(ASTNode ast){
         return true;
     }
+
+    @Override
+    public char suffix() { return 'b'; }
 }
