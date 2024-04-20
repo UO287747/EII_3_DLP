@@ -1,0 +1,4 @@
+call main
+halt
+
+enter	4

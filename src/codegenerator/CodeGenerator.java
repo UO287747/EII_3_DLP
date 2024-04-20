@@ -1,6 +1,9 @@
 package codegenerator;
 
 import ast.Type;
+import ast.types.CharType;
+import ast.types.DoubleType;
+import ast.types.IntType;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -79,6 +82,17 @@ public class CodeGenerator {
 
 
     // Arithmetic
+    public void arithmetic(String op, Type type) {
+
+        switch (op) {
+            case "+" -> add(type);
+            case "-" -> sub(type);
+            case "*" -> mul(type);
+            case "/" -> div(type);
+            case "%" -> mod(type);
+        }
+    }
+
     public void add(Type type) {
 
         this.out.println("add" + type.suffix());
@@ -111,6 +125,19 @@ public class CodeGenerator {
 
 
     // Comparison
+    public void comparison(String op, Type type) {
+
+        switch (op) {
+            case "<" -> lt(type);
+            case "<=" -> le(type);
+            case ">" -> gt(type);
+            case ">=" -> ge(type);
+            case "==" -> eq(type);
+            case "!=" -> ne(type);
+        }
+        this.out.flush();
+    }
+
     public void gt(Type type) {
 
         this.out.println("gt" + type.suffix());
@@ -149,6 +176,16 @@ public class CodeGenerator {
 
 
     // Logical
+    public void logic(String op) {
+
+        switch (op) {
+            case "&&" -> and();
+            case "!" -> not();
+            case "||" -> or();
+        }
+        this.out.flush();
+    }
+
     public void and() {
 
         this.out.println("and");
@@ -185,7 +222,33 @@ public class CodeGenerator {
 
 
     // Conversions
+    public void convertTo(Type type, Type convertType) {
 
+        if (type.equals(IntType.getInstance())) {
+            if (convertType.equals(CharType.getInstance())) {
+                this.out.println("i2b");
+            } else if (convertType.equals(DoubleType.getInstance())) {
+                this.out.println("i2f");
+            }
+
+        } else if (type.equals(DoubleType.getInstance())) {
+            if (convertType.equals(IntType.getInstance())) {
+                this.out.println("f2i");
+            } else if (convertType.equals(CharType.getInstance())) {
+                this.out.println("f2i");
+                this.out.println("i2b");
+            }
+
+        } else if (type.equals(CharType.getInstance())) {
+            if (convertType.equals(IntType.getInstance())) {
+                this.out.println("b2i");
+            } else if (convertType.equals(DoubleType.getInstance())) {
+                this.out.println("b2i");
+                this.out.println("i2f");
+            }
+        }
+        this.out.flush();
+    }
 
 
     // Jumps
@@ -209,6 +272,35 @@ public class CodeGenerator {
 
 
     // Functions
+    public void call(String id) {
 
+        this.out.println("call\t" + id);
+        this.out.flush();
+    }
+
+    public void callMain() {
+
+        this.out.println("call main");
+        this.out.flush();
+    }
+
+    public void enter(int bytesLocals) {
+
+        this.out.println("enter\t" + bytesLocals);
+        this.out.flush();
+    }
+
+    public void ret(int retBytes, int locBytes, int paramBytes) {
+
+        this.out.println("ret\t" + retBytes + ", " + locBytes + ", " + paramBytes);
+        this.out.flush();
+
+    }
+
+    public void halt() {
+
+        this.out.println("halt\n");
+        this.out.flush();
+    }
 
 }
