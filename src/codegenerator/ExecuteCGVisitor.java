@@ -19,6 +19,10 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FuncDefinition,Void> {
     public ExecuteCGVisitor(CodeGenerator codeGenerator) {
 
         this.cg = codeGenerator;
+        this.av = new AddressCGVisitor(cg);
+        this.av.setvv(vv);
+        this.vv = new ValueCGVisitor(cg);
+        this.vv.setav(av);
     }
 
     /**
@@ -44,8 +48,8 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FuncDefinition,Void> {
                 definition.accept(this, param);
             }
         }
-        this.cg.callMain();
-        this.cg.halt();
+        cg.callMain();
+        cg.halt();
         for (Definition definition : ast.getDefinitions()) {
             if (definition instanceof FuncDefinition) {
                 definition.accept(this, param);
@@ -55,35 +59,38 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FuncDefinition,Void> {
     }
 
     /**
-     * execute[[FuncDefinition: definition -> ID type VarDefinition* statement*]]() =
+     * execute[[FuncDefinition: funcDefinition -> ID type VarDefinition* statement*]]() =
      * ID:
      * ' * Parameters:
      * execute[[type]]()
      * ' * Local variables:
      * VarDefinition*.forEach(varDef -> execute[[varDef]]())
-     * definition.bytesLocals = VarDefinition*.isEmpty() ? 0 : -1 * VarDefinition*.get(VarDefinition*.size() - 1).offset
+     * definition.bytesLocals = VarDefinition*.isEmpty() ? 0 : -VarDefinition*.get(VarDefinition*.size() - 1).offset
      * <enter> definition.bytesLocals
      * definition.type.bytesParams = varDefinitions.stream().mapToInt(varDef -> varDef.getType().numberOfBytes()).sum();
      * definition.type.bytesReturns = type.returnType.numberOfBytes();
      * statement*.forEach(stmnt -> execute[[stmnt]](FuncDefinition))
-     * if (definition.bytesReturn === 0) {
+     * if (definition.bytesReturn == 0) {
      *      <ret> definition.getBytesReturn(), definition.getBytesLocals(), definition.type.getBytesParams()
      * }
      */
     @Override
     public Void visit(FuncDefinition ast, FuncDefinition param) {
 
+        cg.info(" "+ast.getName()+":");
+        cg.info("\t' * Parameters");
         ast.getType().accept(this, param);
+        cg.info("\t' * Local variables");
         ast.getVarDefinitions().forEach(varDef -> varDef.accept(this, param));
-        ast.setLocalBytes(ast.getVarDefinitions().isEmpty() ? 0 : -1 * ast.getVarDefinitions().get(ast.getVarDefinitions().size() - 1).getOffset());
-        this.cg.enter(ast.getLocalBytes());
+        ast.setLocalBytes(ast.getVarDefinitions().isEmpty() ? 0 : -ast.getVarDefinitions().get(ast.getVarDefinitions().size() - 1).getOffset());
+        cg.enter(ast.getLocalBytes());
 
-        ((FunctionType) ast.getType()).setParamBytes(((FunctionType) ast.getType()).getParams().stream().mapToInt(varDef -> varDef.getType().numberOfBytes()).sum());
+        ((FunctionType) ast.getType()).setParamBytes(((FunctionType) ast.getType()).getParams().stream().mapToInt(params -> params.getType().numberOfBytes()).sum());
         ((FunctionType) ast.getType()).setRetBytes(((FunctionType) ast.getType()).getReturnType().numberOfBytes());
-        ast.getStatements().forEach(statement -> statement.accept(this, ast));
+        ast.getStatements().forEach(stmt -> stmt.accept(this, ast));
 
         if (((FunctionType) ast.getType()).getRetBytes() == 0) {
-            this.cg.ret(((FunctionType) ast.getType()).getRetBytes(), ast.getLocalBytes(), ((FunctionType) ast.getType()).getParamBytes());
+            cg.ret(((FunctionType) ast.getType()).getRetBytes(), ast.getLocalBytes(), ((FunctionType) ast.getType()).getParamBytes());
         }
         return null;
     }
@@ -94,6 +101,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FuncDefinition,Void> {
     @Override
     public Void visit(VarDefinition ast, FuncDefinition param) {
 
+        cg.info("\t' * "+ast.getType().toString() + " " + ast.getName() + " (offset " + ast.getOffset() + ")");
         return null;
     }
 
@@ -118,10 +126,11 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FuncDefinition,Void> {
     @Override
     public Void visit(Assignment ast, FuncDefinition param) {
 
+        cg.info("\t' * Assignment");
         ast.getLeft().accept(this.av, null);
         ast.getRight().accept(this.vv, null);
-        this.cg.convertTo(ast.getRight().getType(), ast.getLeft().getType());
-        this.cg.store(ast.getLeft().getType());
+        cg.convertTo(ast.getRight().getType(), ast.getLeft().getType());
+        cg.store(ast.getLeft().getType());
         return null;
     }
 
@@ -133,8 +142,9 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FuncDefinition,Void> {
     @Override
     public Void visit(Print ast, FuncDefinition param) {
 
+        cg.info("\t' * Write");
         ast.getExpression().accept(this.vv, null);
-        this.cg.out(ast.getExpression().getType());
+        cg.out(ast.getExpression().getType());
         return null;
     }
 
@@ -147,9 +157,10 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FuncDefinition,Void> {
     @Override
     public Void visit(Input ast, FuncDefinition param) {
 
+        cg.info("\t' * Read");
         ast.getExpression().accept(this.av, null);
-        this.cg.in(ast.getExpression().getType());
-        this.cg.store(ast.getExpression().getType());
+        cg.in(ast.getExpression().getType());
+        cg.store(ast.getExpression().getType());
         return null;
     }
 }

@@ -14,6 +14,10 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void,Void> {
         this.cg = codeGenerator;
     }
 
+    public void setav(AddressCGVisitor av) {
+        this.av = av;
+    }
+
     /**
      * value[[Arithmetic: expression1 -> expression2 (+|-|*|/|%) expression3]]() =
      * value[[expression2]]()

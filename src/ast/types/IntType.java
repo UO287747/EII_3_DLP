@@ -22,7 +22,7 @@ public class IntType extends AbstractType {
 
     @Override
     public String toString() {
-        return "Integer";
+        return "int";
     }
 
     @Override

@@ -1,4 +1,164 @@
+	' * Char c (offset 0)
+	' * Integer i (offset 1)
+	' * Double r (offset 3)
+
+' Invocation to the main function
 call main
 halt
 
-enter	4
+ main:
+	' * Parameters
+	' * Local variables
+	' * Integer a (offset -2)
+	' * Integer i (offset -4)
+	enter	4
+	' * Assignment
+	pusha	0
+	push	97
+	storeb
+	' * Write
+	pusha	0
+	loadb
+	outb
+	' * Write
+	push	10
+	outb
+	' * Assignment
+	push	 bp
+	push	-2
+	addi
+	push	1
+	storei
+	' * Assignment
+	push	 bp
+	push	-4
+	addi
+	push	48
+	b2i
+	push	3
+	muli
+	storei
+	' * Write
+	push	 bp
+	push	-2
+	addi
+	loadi
+	outi
+	' * Write
+	push	32
+	outb
+	' * Write
+	push	 bp
+	push	-4
+	addi
+	loadi
+	outi
+	' * Write
+	push	10
+	outb
+	' * Read
+	pusha	3
+	inf
+	storef
+	' * Write
+	push	2
+	i2f
+	f2i
+	pusha	3
+	loadf
+	f2i
+	muli
+	outi
+	' * Write
+	push	10
+	outb
+	' * Write
+	push	3
+	i2f
+	f2i
+	pushf	4.5
+	f2i
+	subi
+	outi
+	' * Write
+	push	32
+	outb
+	' * Write
+	push	48
+	b2i
+	i2f
+	f2i
+	pushf	48.0
+	f2i
+	divi
+	outi
+	' * Write
+	push	32
+	outb
+	' * Write
+	push	48
+	b2i
+	push	49
+	b2i
+	modi
+	outi
+	' * Write
+	push	32
+	outb
+	' * Write
+	push	0
+	push	49
+	b2i
+	addi
+	outi
+	' * Write
+	push	10
+	outb
+	' * Write
+	push	1
+	push	2
+	lti
+	outi
+	' * Write
+	push	32
+	outb
+	' * Write
+	push	4
+	push	3
+	gei
+	outi
+	' * Write
+	push	32
+	outb
+	' * Write
+	push	5
+	push	5
+	eqi
+	outi
+	' * Write
+	push	32
+	outb
+	' * Write
+	push	1
+	push	2
+	and
+	outi
+	' * Write
+	push	32
+	outb
+	' * Write
+	push	0
+	push	3
+	or
+	outi
+	' * Write
+	push	32
+	outb
+	' * Write
+	push	0
+	not
+	outi
+	' * Write
+	push	10
+	outb
+	ret	0, 4, 0

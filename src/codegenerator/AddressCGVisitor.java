@@ -1,11 +1,8 @@
 package codegenerator;
 
 import ast.definitions.VarDefinition;
-import ast.expressions.ArrayAccess;
-import ast.expressions.StructAccess;
 import ast.expressions.Variable;
 import ast.types.IntType;
-import ast.types.StructType;
 
 public class AddressCGVisitor extends AbstractCGVisitor<Void,Void> {
 
@@ -15,6 +12,10 @@ public class AddressCGVisitor extends AbstractCGVisitor<Void,Void> {
     public AddressCGVisitor(CodeGenerator codeGenerator) {
 
         this.cg = codeGenerator;
+    }
+
+    public void setvv(ValueCGVisitor vv) {
+        this.vv = vv;
     }
 
     /**
