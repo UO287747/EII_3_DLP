@@ -25,15 +25,15 @@ public class CodeGenerator {
         out.flush();
     }
 
-    public void pushb(char c) {
+    public void push(char c) {
 
-        out.println("\tpushb\t" + c);
+        out.println("\tpushb\t" + (int) c);
         out.flush();
     }
 
     public void push(int i) {
 
-        out.println("\tpush\t" + i);
+        out.println("\tpushi\t" + i);
         out.flush();
     }
 

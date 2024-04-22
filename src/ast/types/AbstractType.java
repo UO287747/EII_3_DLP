@@ -110,7 +110,7 @@ public abstract class AbstractType extends AbstractASTNode implements Type  {
 
     @Override
     public int numberOfBytes() {
-        return 0;
+        throw new IllegalStateException();
     }
 
     @Override

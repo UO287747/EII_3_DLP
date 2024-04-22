@@ -126,7 +126,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FuncDefinition,Void> {
     @Override
     public Void visit(Assignment ast, FuncDefinition param) {
 
-        cg.info("\t' * Assignment");
+        cg.info("\n\t' * Assignment");
         ast.getLeft().accept(this.av, null);
         ast.getRight().accept(this.vv, null);
         cg.convertTo(ast.getRight().getType(), ast.getLeft().getType());
@@ -142,7 +142,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FuncDefinition,Void> {
     @Override
     public Void visit(Print ast, FuncDefinition param) {
 
-        cg.info("\t' * Write");
+        cg.info("\n\t' * Write");
         ast.getExpression().accept(this.vv, null);
         cg.out(ast.getExpression().getType());
         return null;
@@ -157,7 +157,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FuncDefinition,Void> {
     @Override
     public Void visit(Input ast, FuncDefinition param) {
 
-        cg.info("\t' * Read");
+        cg.info("\n\t' * Read");
         ast.getExpression().accept(this.av, null);
         cg.in(ast.getExpression().getType());
         cg.store(ast.getExpression().getType());
