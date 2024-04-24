@@ -1,5 +1,6 @@
 package codegenerator;
 
+import ast.Expression;
 import ast.expressions.*;
 import ast.types.IntType;
 
@@ -159,6 +160,36 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void,Void> {
 
         ast.accept(this.av, param);
         this.cg.load(ast.getType());
+        return null;
+    }
+
+    /**
+     * address[[Indexing: expression1 -> expression2 expression3]]() =
+     *      address[[expression1]]
+     *      <load> expression1.type.suffix()
+     */
+    @Override
+    public Void visit(ArrayAccess ast, Void param) {
+
+        ast.accept(this.av, param);
+        cg.load(ast.getType());
+        return null;
+    }
+
+    /**
+     * execute[[Invocation: statement -> expression1 expression2*]]() =
+     *      for (Expression arg : expression3*)
+     *          value[[arg]]()
+     *      <call> expression2.name
+     */
+    @Override
+    public Void visit(FuncInvocation ast, Void param) {
+
+        for (Expression expression: ast.getExpressions()) {
+            expression.accept(this, param);
+            cg.convertTo(expression.getType(), ast.getVariable().getDefinition().getType());
+        }
+        cg.call(ast.getVariable().getName());
         return null;
     }
 }

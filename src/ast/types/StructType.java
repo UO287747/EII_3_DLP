@@ -4,6 +4,7 @@ import ast.ASTNode;
 import ast.AbstractASTNode;
 import ast.RecordField;
 import ast.Type;
+import ast.definitions.VarDefinition;
 import visitor.Visitor;
 
 import java.util.List;
@@ -54,5 +55,15 @@ public class StructType extends AbstractType {
             nOB += rf.getType().numberOfBytes();
         }
         return nOB;
+    }
+
+
+    public RecordField getField(String name) {
+
+        for (RecordField recordField: recordFields) {
+            if (recordField.getName().equals(name))
+                return recordField;
+        }
+        return null;
     }
 }

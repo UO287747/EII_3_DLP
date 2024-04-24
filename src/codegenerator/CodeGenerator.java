@@ -12,6 +12,7 @@ import java.io.PrintWriter;
 public class CodeGenerator {
 
     PrintWriter out;
+    int label;
 
     public CodeGenerator(String outputFileName, String inputFileName) throws FileNotFoundException {
 
@@ -309,6 +310,10 @@ public class CodeGenerator {
 
         out.println(text);
         out.flush();
+    }
+
+    public int getLabel() {
+        return label++;
     }
     
 }

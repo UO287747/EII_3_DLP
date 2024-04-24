@@ -2,12 +2,13 @@ package codegenerator;
 
 import ast.Definition;
 import ast.Program;
+import ast.Statement;
 import ast.definitions.FuncDefinition;
 import ast.definitions.VarDefinition;
-import ast.statements.Assignment;
-import ast.statements.Input;
-import ast.statements.Print;
+import ast.expressions.FuncInvocation;
+import ast.statements.*;
 import ast.types.FunctionType;
+import ast.types.VoidType;
 
 public class ExecuteCGVisitor extends AbstractCGVisitor<FuncDefinition,Void> {
 
@@ -27,18 +28,18 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FuncDefinition,Void> {
 
     /**
      * execute[[Program: program -> definition*]]() =
-     * for (Definition definition : definition*) {
-     *      if (definition instanceof VarDefinition) {
-     *          execute[[definition]]()
+     *      for (Definition definition : definition*) {
+     *              if (definition instanceof VarDefinition) {
+     *                  execute[[definition]]()
+     *              }
      *      }
-     * }
-     * <call main>
-     * <halt>
-     * for (Definition definition : definition*) {
-     *      if (definition instanceof FuncDefinition) {
-     *          execute[[definition]]()
+     *      <call main>
+     *      <halt>
+     *      for (Definition definition : definition*) {
+     *              if (definition instanceof FuncDefinition) {
+     *                  execute[[definition]]()
+     *              }
      *      }
-     * }
      */
     @Override
     public Void visit(Program ast, FuncDefinition param) {
@@ -60,19 +61,19 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FuncDefinition,Void> {
 
     /**
      * execute[[FuncDefinition: funcDefinition -> ID type VarDefinition* statement*]]() =
-     * ID:
-     * ' * Parameters:
-     * execute[[type]]()
-     * ' * Local variables:
-     * VarDefinition*.forEach(varDef -> execute[[varDef]]())
-     * definition.bytesLocals = VarDefinition*.isEmpty() ? 0 : -VarDefinition*.get(VarDefinition*.size() - 1).offset
-     * <enter> definition.bytesLocals
-     * definition.type.bytesParams = varDefinitions.stream().mapToInt(varDef -> varDef.getType().numberOfBytes()).sum();
-     * definition.type.bytesReturns = type.returnType.numberOfBytes();
-     * statement*.forEach(stmnt -> execute[[stmnt]](FuncDefinition))
-     * if (definition.bytesReturn == 0) {
-     *      <ret> definition.getBytesReturn(), definition.getBytesLocals(), definition.type.getBytesParams()
-     * }
+     *      ID:
+     *      ' * Parameters:
+     *      execute[[type]]()
+     *      ' * Local variables:
+     *      VarDefinition*.forEach(varDef -> execute[[varDef]]())
+     *      definition.bytesLocals = VarDefinition*.isEmpty() ? 0 : -VarDefinition*.get(VarDefinition*.size() - 1).offset
+     *      <enter> definition.bytesLocals
+     *      definition.type.bytesParams = varDefinitions.stream().mapToInt(varDef -> varDef.getType().numberOfBytes()).sum();
+     *      definition.type.bytesReturns = type.returnType.numberOfBytes();
+     *      statement*.forEach(stmnt -> execute[[stmnt]](FuncDefinition))
+     *      if (definition.bytesReturn == 0) {
+     *              <ret> definition.getBytesReturn(), definition.getBytesLocals(), definition.type.getBytesParams()
+     *      }
      */
     @Override
     public Void visit(FuncDefinition ast, FuncDefinition param) {
@@ -107,7 +108,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FuncDefinition,Void> {
 
     /**
      * execute[[FunctionType: type -> VarDefinition* type]]() =
-     * VarDefinition*.forEach(varDef -> execute[[varDef]]())
+     *      VarDefinition*.forEach(varDef -> execute[[varDef]]())
      */
     @Override
     public Void visit(FunctionType ast, FuncDefinition param) {
@@ -118,10 +119,10 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FuncDefinition,Void> {
 
     /**
      * execute[[Assignment: statement -> expression1 expression2]]() =
-     * address[[expression1]]()
-     * value[[expression2]]()
-     * cg.convertTo(expression2.type, expression1.type)
-     * <store> expression1.type.suffix()
+     *      address[[expression1]]()
+     *      value[[expression2]]()
+     *      cg.convertTo(expression2.type, expression1.type)
+     *      <store> expression1.type.suffix()
      */
     @Override
     public Void visit(Assignment ast, FuncDefinition param) {
@@ -136,8 +137,8 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FuncDefinition,Void> {
 
     /**
      * execute[[Print: statement -> expression]]() =
-     * value[[expression]]()
-     * <out> expression.type.suffix()
+     *      value[[expression]]()
+     *      <out> expression.type.suffix()
      */
     @Override
     public Void visit(Print ast, FuncDefinition param) {
@@ -150,9 +151,9 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FuncDefinition,Void> {
 
     /**
      * execute[[Input: statement -> expression]]() =
-     * address[[expression]]()
-     * <in> expression.type.suffix()
-     * <store> expression.type.suffix()
+     *      address[[expression]]()
+     *      <in> expression.type.suffix()
+     *      <store> expression.type.suffix()
      */
     @Override
     public Void visit(Input ast, FuncDefinition param) {
@@ -162,5 +163,86 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FuncDefinition,Void> {
         cg.in(ast.getExpression().getType());
         cg.store(ast.getExpression().getType());
         return null;
+    }
+
+    /**
+     * execute[[Invocation: statement -> expression1 expression2*]]() =
+     *      value[[(Expression) statement]]()
+     *      if (!((Expression)statement).type instanceof VoidType)
+     *          <pop> ((Expression)statement).type.suffix()
+     */
+    @Override
+    public Void visit(FuncInvocation ast, FuncDefinition param) {
+
+        ast.accept(vv, null);
+        if (!(ast.getType() instanceof VoidType))
+            cg.pop(ast.getType());
+        return null;
+    }
+
+
+    /**
+     * execute[[Return : statement -> expression]](funcDefinition) =
+     *      value[[expression]]()
+     *      <ret>   funcDefinition.type.returnType.numberOfBytes <,>
+     *              funcDefinition.bytesLocalSum <,>
+     *              funcDefinition.type.bytesParamSum
+     */
+    @Override
+    public Void visit(Return ast, FuncDefinition param) {
+
+        cg.info("\n\t' * Return");
+        ast.getExpression().accept(vv, null);
+        cg.ret(((FunctionType)param.getType()).getRetBytes(), param.getLocalBytes(),
+                ((FunctionType)param.getType()).getParamBytes());
+        return null;
+    }
+
+    /**
+     * execute[[While: statement1 -> expression statement2*]]() =
+     *      int condition = cg.getLabel();
+     *      int end = cg.getLabel();
+     *      condition <:>
+     *          value[[expression]]()
+     *          <jz> end
+     *          for (Statement statement: ast.getStatements())
+                    execute[[statement]])
+     *          <jmp> condition
+     *      end <:>
+     */
+    @Override
+    public Void visit(While ast, FuncDefinition param) {
+
+        cg.info("\n\t' * While");
+        int condition = cg.getLabel();
+        int end = cg.getLabel();
+
+        ast.getCondition().accept(vv, null);
+        cg.jz(end);
+        cg.info("\n\t' * While body");
+        for (Statement statement: ast.getStatements())
+            statement.accept(this, param);
+        cg.jmp(condition);
+        return null;
+    }
+
+    /**
+     * execute[[IfElse: statement1 -> expression statement2* statement3*]]() =
+     *      int elseBody = cg.getLabel();
+     *      int end = cg.getLabel();
+     *      value [[expression]]()
+     *      <jz> elseBody
+     *      for (Statement statement: statement2*)
+     *          execute[[statement]])
+     *      <jmp> end
+     *      elseBody <:>
+     *      for (Statement statement: statement3*)
+     *      *          execute[[statement]])
+     *      end <:>
+     */
+    @Override
+    public Void visit(IfElse ast, FuncDefinition param) {
+
+
     }
 }
