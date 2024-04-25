@@ -12,7 +12,7 @@ import java.io.PrintWriter;
 public class CodeGenerator {
 
     PrintWriter out;
-    int label;
+    private int labels = 0;
 
     public CodeGenerator(String outputFileName, String inputFileName) throws FileNotFoundException {
 
@@ -86,11 +86,11 @@ public class CodeGenerator {
     public void arithmetic(String op, Type type) {
 
         switch (op) {
-            case "+" -> add(type);
-            case "-" -> sub(type);
-            case "*" -> mul(type);
-            case "/" -> div(type);
-            case "%" -> mod(type);
+            case "+": add(type); break;
+            case "-": sub(type); break;
+            case "*": mul(type); break;
+            case "/": div(type); break;
+            case "%": mod(type); break;
         }
     }
 
@@ -129,12 +129,12 @@ public class CodeGenerator {
     public void comparison(String op, Type type) {
 
         switch (op) {
-            case "<" -> lt(type);
-            case "<=" -> le(type);
-            case ">" -> gt(type);
-            case ">=" -> ge(type);
-            case "==" -> eq(type);
-            case "!=" -> ne(type);
+            case "<": lt(type); break;
+            case "<=": le(type); break;
+            case ">": gt(type); break;
+            case ">=": ge(type); break;
+            case "==": eq(type); break;
+            case "!=": ne(type); break;
         }
         out.flush();
     }
@@ -180,9 +180,9 @@ public class CodeGenerator {
     public void logic(String op) {
 
         switch (op) {
-            case "&&" -> and();
-            case "!" -> not();
-            case "||" -> or();
+            case "&&": and(); break;
+            case "||": or(); break;
+            case "!": not(); break;
         }
         out.flush();
     }
@@ -253,19 +253,19 @@ public class CodeGenerator {
 
 
     // Jumps
-    public void jmp(int label) {
+    public void jmp(String label) {
 
         out.println("\tjmp\t" + label);
         out.flush();
     }
 
-    public void jz(int label) {
+    public void jz(String label) {
 
         out.println("\tjz\t" + label);
         out.flush();
     }
 
-    public void jnz(int label) {
+    public void jnz(String label) {
 
         out.println("\tjnz\t" + label);
         out.flush();
@@ -312,8 +312,8 @@ public class CodeGenerator {
         out.flush();
     }
 
-    public int getLabel() {
-        return label++;
+    public String nextLabel() {
+        return " label" + this.labels++;
     }
     
 }

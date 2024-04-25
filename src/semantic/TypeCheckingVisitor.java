@@ -16,9 +16,9 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void,Void> {
     @Override
     public Void visit(Arithmetic e, Void param) {
 
+        e.setLvalue(false);
         e.getLeft().accept(this, param);
         e.getRight().accept(this, param);
-        e.setLvalue(false);
         e.setType(e.getLeft().getType().arithmetic(e.getRight().getType(), e));
         return null;
     }

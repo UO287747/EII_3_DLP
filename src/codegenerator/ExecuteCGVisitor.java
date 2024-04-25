@@ -1,6 +1,7 @@
 package codegenerator;
 
 import ast.Definition;
+import ast.Expression;
 import ast.Program;
 import ast.Statement;
 import ast.definitions.FuncDefinition;
@@ -9,6 +10,7 @@ import ast.expressions.FuncInvocation;
 import ast.statements.*;
 import ast.types.FunctionType;
 import ast.types.VoidType;
+import com.sun.jdi.event.StepEvent;
 
 public class ExecuteCGVisitor extends AbstractCGVisitor<FuncDefinition,Void> {
 
@@ -21,8 +23,8 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FuncDefinition,Void> {
 
         this.cg = codeGenerator;
         this.av = new AddressCGVisitor(cg);
-        this.av.setvv(vv);
         this.vv = new ValueCGVisitor(cg);
+        this.av.setvv(vv);
         this.vv.setav(av);
     }
 
@@ -97,7 +99,8 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FuncDefinition,Void> {
     }
 
     /**
-     * execute[[VarDefinition: definition -> ID type]]()
+     * execute[[VarDefinition: definition -> ID type]]() =
+     *      ' * type ID (offset definition.offset)
      */
     @Override
     public Void visit(VarDefinition ast, FuncDefinition param) {
@@ -166,22 +169,6 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FuncDefinition,Void> {
     }
 
     /**
-     * execute[[Invocation: statement -> expression1 expression2*]]() =
-     *      value[[(Expression) statement]]()
-     *      if (!((Expression)statement).type instanceof VoidType)
-     *          <pop> ((Expression)statement).type.suffix()
-     */
-    @Override
-    public Void visit(FuncInvocation ast, FuncDefinition param) {
-
-        ast.accept(vv, null);
-        if (!(ast.getType() instanceof VoidType))
-            cg.pop(ast.getType());
-        return null;
-    }
-
-
-    /**
      * execute[[Return : statement -> expression]](funcDefinition) =
      *      value[[expression]]()
      *      <ret>   funcDefinition.type.returnType.numberOfBytes <,>
@@ -200,8 +187,8 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FuncDefinition,Void> {
 
     /**
      * execute[[While: statement1 -> expression statement2*]]() =
-     *      int condition = cg.getLabel();
-     *      int end = cg.getLabel();
+     *      String condition = cg.getLabel();
+     *      String end = cg.getLabel();
      *      condition <:>
      *          value[[expression]]()
      *          <jz> end
@@ -214,22 +201,24 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FuncDefinition,Void> {
     public Void visit(While ast, FuncDefinition param) {
 
         cg.info("\n\t' * While");
-        int condition = cg.getLabel();
-        int end = cg.getLabel();
+        String condition = cg.nextLabel();
+        String end = cg.nextLabel();
 
+        cg.info(condition + ":");
         ast.getCondition().accept(vv, null);
         cg.jz(end);
         cg.info("\n\t' * While body");
         for (Statement statement: ast.getStatements())
             statement.accept(this, param);
         cg.jmp(condition);
+        cg.info(end + ":");
         return null;
     }
 
     /**
      * execute[[IfElse: statement1 -> expression statement2* statement3*]]() =
-     *      int elseBody = cg.getLabel();
-     *      int end = cg.getLabel();
+     *      String elseBody = cg.getLabel();
+     *      String end = cg.getLabel();
      *      value [[expression]]()
      *      <jz> elseBody
      *      for (Statement statement: statement2*)
@@ -243,6 +232,39 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FuncDefinition,Void> {
     @Override
     public Void visit(IfElse ast, FuncDefinition param) {
 
+        cg.info("\n\t' * IfElse");
+        String elseBody = cg.nextLabel();
+        String end = cg.nextLabel();
 
+        ast.getCondition().accept(vv, null);
+        cg.jz(elseBody);
+        cg.info("\n\t' * If body");
+        for (Statement statement: ast.getIfBody())
+            statement.accept(this, param);
+        cg.jmp(end);
+        cg.info(elseBody + ":");
+        cg.info("\n\t' * Else body");
+        for (Statement statement: ast.getElseBody())
+            statement.accept(this, param);
+        cg.info(end + ":");
+        return null;
+    }
+
+    /**
+     * execute[[Invocation: statement -> expression1 expression2*]]() =
+     *      value[[statement*]]
+     *      call exp1.name
+     *      if(!(exp1.type.returnType instanceof VoidType))
+     *          pop exp1.type.returnType.suffix()
+     */
+    @Override
+    public Void visit(FuncInvocation ast, FuncDefinition param) {
+
+        for (Expression expression: ast.getExpressions())
+            expression.accept(vv, null);
+        cg.call(ast.getVariable().getName());
+        if (!(ast.getType() instanceof VoidType))
+            cg.pop(ast.getType());
+        return null;
     }
 }

@@ -39,8 +39,10 @@ public class IntType extends AbstractType {
     @Override
     public Type arithmetic(Type type, ASTNode ast) {
 
-        if (type.isBuiltInType(ast)) { return IntType.getInstance(); }
-        return super.arithmetic(type, ast);
+        Type newType = instance.promotesTo(type, ast);
+        if (newType instanceof ErrorType)
+            return super.arithmetic(type, ast);
+        return newType;
     }
 
     @Override
@@ -64,8 +66,11 @@ public class IntType extends AbstractType {
     @Override
     public Type promotesTo(Type type, ASTNode ast) {
 
-        if (type.equals(IntType.getInstance()) || type.equals(DoubleType.getInstance())) { return type; }
-        return super.promotesTo(type, ast);
+        if (type instanceof ErrorType)
+            return type;
+        if (this.getClass() == type.getClass())
+            return this;
+        return new ErrorType(ast.getLine(), ast.getColumn(), "Cannot promote " + this + " to " + type);
     }
 
     @Override
