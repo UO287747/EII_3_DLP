@@ -114,7 +114,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void,Void> {
 
         e.getExpression().accept(this, param);
         e.setLvalue(false);
-        e.setType(e.getType().arithmetic(e));
+        e.setType(e.getExpression().getType().arithmetic(e));
         return null;
     }
 

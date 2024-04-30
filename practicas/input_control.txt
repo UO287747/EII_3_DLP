@@ -14,15 +14,15 @@ matrix:[10][10]int;
 # Functions
 def setValue(row:int, columnn:int, value:int): {
 	if row >= 0 && row < MATRIXSIZE && columnn >= 0 && columnn < MATRIXSIZE: {
-		matrix[row][column] = value;
+		matrix[row][columnn] = value;
 	}
 }
 def getValue(row:int, columnn:int):int {
 	if (row < 0 || row >= MATRIXSIZE) || (columnn < 0 && columnn >= MATRIXSIZE): {
 		return -1;
 	}
-	else: {	
-		return matrix[row][column];
+	else: {
+		return matrix[row][columnn];
 	}
 }
 def fill(value:int): {
