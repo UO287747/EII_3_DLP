@@ -68,7 +68,7 @@ public class IntType extends AbstractType {
 
         if (type instanceof ErrorType)
             return type;
-        if (this.getClass() == type.getClass())
+        if (type.equals(IntType.getInstance()))
             return this;
         return new ErrorType(ast.getLine(), ast.getColumn(), "Cannot promote " + this + " to " + type);
     }
