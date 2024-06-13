@@ -32,7 +32,7 @@ public interface Type extends ASTNode {
 
     boolean isBuiltInType(ASTNode ast);
 
-    boolean isLogical(ASTNode ast);
+    boolean isLogical();
 
     char suffix();
 }

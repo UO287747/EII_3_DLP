@@ -2,8 +2,6 @@ package semantic;
 
 import ast.Expression;
 import ast.Statement;
-import ast.definitions.FuncDefinition;
-import ast.definitions.VarDefinition;
 import ast.expressions.*;
 import ast.statements.*;
 import ast.types.*;
@@ -141,7 +139,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void,Void> {
         e.getLeft().accept(this, param);
         e.getRight().accept(this, param);
         if (!e.getLeft().getLvalue())
-            new ErrorType(e.getLine(), e.getColumn(), "Error type LValue.");
+            new ErrorType(e.getLine(), e.getColumn(), "Error: type LValue.");
         e.getRight().getType().promotesTo(e.getLeft().getType(), e);
         return null;
     }
@@ -150,11 +148,11 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void,Void> {
     public Void visit(IfElse e, Void param) {
 
         e.getCondition().accept(this, param);
+        e.getCondition().setType(e.getCondition().getType().asLogical(e.getCondition().getType()));
         for (Statement statement: e.getIfBody())
             statement.accept(this, param);
         for (Statement statement: e.getElseBody())
             statement.accept(this, param);
-        e.getCondition().setType(e.getCondition().getType().asLogical(e.getCondition().getType()));
         return null;
     }
 
@@ -163,7 +161,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void,Void> {
 
         e.getExpression().accept(this, param);
         if (!e.getExpression().getLvalue())
-            new ErrorType(e.getLine(), e.getColumn(), "Error type LValue.");
+            new ErrorType(e.getLine(), e.getColumn(), "Error: type LValue.");
         e.getExpression().setType(e.getExpression().getType().asBuiltInType(e.getExpression().getType()));
         return null;
     }
@@ -180,9 +178,9 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void,Void> {
     public Void visit(While e, Void param) {
 
         e.getCondition().accept(this, param);
+        e.getCondition().setType(e.getCondition().getType().asLogical(e.getCondition().getType()));
         for (Statement statement: e.getStatements())
             statement.accept(this, param);
-        e.getCondition().setType(e.getCondition().getType().asLogical(e.getCondition().getType()));
         return null;
     }
 }

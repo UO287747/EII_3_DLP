@@ -33,7 +33,8 @@ public class CharType extends AbstractType {
     @Override
     public Type arithmetic(Type type, ASTNode ast) {
 
-        if (type.isBuiltInType(ast)) { return IntType.getInstance(); }
+        if (type instanceof CharType)
+            return IntType.getInstance();
         return super.arithmetic(type, ast);
     }
 

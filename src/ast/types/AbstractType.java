@@ -27,7 +27,7 @@ public abstract class AbstractType extends AbstractASTNode implements Type  {
 
         if (this instanceof ErrorType)
             return this;
-        if (this.isLogical(ast))
+        if (this.isLogical())
             return this;
         return new ErrorType(ast.getLine(), ast.getColumn(), "Error: se esperaba un tipo logico.");
     }
@@ -103,7 +103,7 @@ public abstract class AbstractType extends AbstractASTNode implements Type  {
     }
 
     @Override
-    public  Type parenthesis(List<Type> list, ASTNode ast) {
+    public Type parenthesis(List<Type> list, ASTNode ast) {
 
         return new ErrorType(ast.getLine(), ast.getColumn(), "Error: parámetros incorrectos.");
     }
@@ -119,7 +119,7 @@ public abstract class AbstractType extends AbstractASTNode implements Type  {
     }
 
     @Override
-    public boolean isLogical(ASTNode ast){
+    public boolean isLogical(){
         return false;
     }
 

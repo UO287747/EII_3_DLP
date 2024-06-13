@@ -33,10 +33,9 @@ public class DoubleType extends AbstractType {
     @Override
     public Type arithmetic(Type type, ASTNode ast) {
 
-        Type newType = instance.promotesTo(type, ast);
-        if (newType instanceof ErrorType)
-            return super.arithmetic(type, ast);
-        return newType;
+        if (type instanceof DoubleType)
+            return DoubleType.getInstance();
+        return super.arithmetic(type, ast);
     }
 
     @Override
