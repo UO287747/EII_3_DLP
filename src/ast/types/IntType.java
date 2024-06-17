@@ -82,7 +82,9 @@ public class IntType extends AbstractType {
     @Override
     public Type comparison(Type type, ASTNode ast) {
 
-        if (type.isBuiltInType(ast)) { return IntType.getInstance(); }
+        if(type instanceof IntType){
+            return type;
+        }
         return super.comparison(type, ast);
     }
 

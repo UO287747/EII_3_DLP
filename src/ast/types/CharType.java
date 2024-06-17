@@ -46,7 +46,10 @@ public class CharType extends AbstractType {
     @Override
     public Type promotesTo(Type type, ASTNode ast) {
 
-        if (type.isBuiltInType(ast)) { return type; }
+        if (type instanceof ErrorType)
+            return type;
+        if (type.equals(CharType.getInstance()))
+            return this;
         return super.promotesTo(type, ast);
     }
 
@@ -60,7 +63,9 @@ public class CharType extends AbstractType {
     @Override
     public Type comparison(Type type, ASTNode ast) {
 
-        if (type.isBuiltInType(ast)) { return IntType.getInstance(); }
+        if(type instanceof CharType){
+            return type;
+        }
         return super.comparison(type, ast);
     }
 

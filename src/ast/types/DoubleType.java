@@ -46,7 +46,10 @@ public class DoubleType extends AbstractType {
     @Override
     public Type promotesTo(Type type, ASTNode ast) {
 
-        if (type.equals(DoubleType.getInstance())) { return type; }
+        if (type instanceof ErrorType)
+            return type;
+        if (type.equals(DoubleType.getInstance()))
+            return this;
         return super.promotesTo(type, ast);
     }
 
@@ -60,7 +63,9 @@ public class DoubleType extends AbstractType {
     @Override
     public Type comparison(Type type, ASTNode ast) {
 
-        if (type.isBuiltInType(ast)) { return IntType.getInstance(); }
+        if(type instanceof DoubleType){
+            return type;
+        }
         return super.comparison(type, ast);
     }
 
